@@ -21,6 +21,7 @@ import FirebaseServices from "../../Service/FirebaseServices";
 import Utils from "../../utilities/utils";
 import LocationTracker from "../../components/Location/LocationTracker";
 import Collapsible from "react-native-collapsible";
+//import { useLocales } from 'expo-localization';
 
 type HomeScreenProps = { navigation: DrawerNavigationProp<RootStackParamList, "Dashboard"> };
 
@@ -29,7 +30,8 @@ const Home = ({ navigation }: HomeScreenProps) => {
   const { colors }: { colors: any } = theme;
   const [receiptData, setReceiptData] = useState<any[]>([]);
   const [activeSections, setActiveSections] = useState<string[]>([]);
-
+  // const locale = useLocales ? useLocales() : 'en'; // Default to 'en' if undefined
+  // console.log('Current Locale:', locale);
   useEffect(() => {
     // Subscribe to user receipts
     const unsubscribe = FirebaseServices.subscribeToUserReceipts((data) => {
@@ -115,22 +117,22 @@ const Home = ({ navigation }: HomeScreenProps) => {
       </View>
 
       {/* Add Location Tracker */}
-      <LocationTracker />
+      {/* <LocationTracker /> */}
 
-      <View
+      {/* <View
         style={[
           GlobalStyleSheet.container,
           { padding: 0, paddingHorizontal: 15 },
         ]}
       >
         <Text
-          style={{ ...FONTS.fontSemiBold, fontSize: 16, color: colors.title, paddingBottom:10 }}
+          style={{ ...FONTS.fontSemiBold, fontSize: 16, color: colors.title, paddingBottom: 10 }}
         >
           Your Saved Receipts
         </Text>
-      </View>
+      </View> */}
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      {/* <ScrollView showsVerticalScrollIndicator={false}>
         <View style={GlobalStyleSheet.container}>
           {receiptData.length === 0 ? (
             // Default background message when data is empty
@@ -140,57 +142,57 @@ const Home = ({ navigation }: HomeScreenProps) => {
             </View>
           ) : (
             <View>
-            {Object.entries(receiptData).map(([merchantName, transactions]: [string, any[]], index) => (
+              {Object.entries(receiptData).map(([merchantName, transactions]: [string, any[]], index) => (
                 <View key={index} style={{ marginBottom: 20 }}>
-                <TouchableOpacity
-                  onPress={() => toggleSection(merchantName)}
-                  style={styles.merchantHeaderContainer}
-                >
-                  <Text style={styles.merchantHeader}>{merchantName}</Text>
-                  <Feather
-                    name={
-                      activeSections.includes(merchantName)
-                        ? "chevron-up"
-                        : "chevron-down"
-                    }
-                    size={24}
-                    color={colors.text}
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => toggleSection(merchantName)}
+                    style={styles.merchantHeaderContainer}
+                  >
+                    <Text style={styles.merchantHeader}>{merchantName}</Text>
+                    <Feather
+                      name={
+                        activeSections.includes(merchantName)
+                          ? "chevron-up"
+                          : "chevron-down"
+                      }
+                      size={24}
+                      color={colors.text}
+                    />
+                  </TouchableOpacity>
 
-                <Collapsible collapsed={!activeSections.includes(merchantName)}>
-                  {transactions.map((data, idx) => (
-                    <View key={idx} style={{ marginBottom: 15 }}>
-                      <ReceiptCard
-                        merchantName={data.merchantName}
-                        merchantAddress={data.merchantAddress}
-                        transactionDate={Utils.formatFromISODate(
-                          data.transactionDate,
-                          "MM/dd/yyyy"
-                        )}
-                        transactionTotal={data.total}
-                        onPress={() =>
-                          navigation.navigate("WebViewer", {
-                            url: data.receiptUri,
-                          })
-                        }
-                      />
-                    </View>
-                  ))}
-                </Collapsible>
-              </View>
-            ))}
-</View>
+                  <Collapsible collapsed={!activeSections.includes(merchantName)}>
+                    {transactions.map((data, idx) => (
+                      <View key={idx} style={{ marginBottom: 15 }}>
+                        <ReceiptCard
+                          merchantName={data.merchantName}
+                          merchantAddress={data.merchantAddress}
+                          transactionDate={Utils.formatFromISODate(
+                            data.transactionDate,
+                            "MM/dd/yyyy"
+                          )}
+                          transactionTotal={data.total}
+                          onPress={() =>
+                            navigation.navigate("WebViewer", {
+                              url: data.receiptUri,
+                            })
+                          }
+                        />
+                      </View>
+                    ))}
+                  </Collapsible>
+                </View>
+              ))}
+            </View>
           )}
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: { 
-    flexGrow: 1 
+  scrollContainer: {
+    flexGrow: 1
   },
   emptyContainer: {
     flex: 1,

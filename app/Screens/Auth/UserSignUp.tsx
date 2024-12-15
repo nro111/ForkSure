@@ -44,15 +44,6 @@ const UserSignUp = ({ navigation }: SignUpScreenProps) => {
   const [loading, setLoading] = useState(false);
   const [email, setemail] = useState("");
   const [pass, setpass] = useState("");
-  const [address, setaddress] = useState("");
-  
-  const [isMerchant, setIsMerchant] = useState(false);
-  const [role, setRole] = useState('User');
-
-  const handleToggle = (value: any) => {
-    setIsMerchant(value);
-    setRole(value ? 'Merchant' : 'User');
-  };
 
   const registerUser = async () => {
     if (email == "" || pass == "") {
@@ -72,14 +63,22 @@ const UserSignUp = ({ navigation }: SignUpScreenProps) => {
       const user = userCredential.user;
       
       let userData: FirebaseUser = {
+        address: "",
+        createDateTime: new Date().toISOString(),
         email: email,
         firstName: userCredential.user.displayName?.split(" ")[0] ?? "",
-        lastName: userCredential.user.displayName?.split(" ")[1] ?? "",
         gender: "",
+        id: "",
+        img: "",
+        lastLoginDateTime: new Date().toISOString(),
+        lastName: userCredential.user.displayName?.split(" ")[1] ?? "",
+        lastUpdatedDateTime: "",
+        password: "Test123!",
+        passwordHash: "",
+        phone: "",
         pushTokenId: "",
-        createDateTime: new Date().toISOString(),
-        lastLoginDateTime:  new Date().toISOString(),
-        address: ""
+        tokenId: "",
+        username: "user1"
       }
 
       await Auth.registerUser(userData, Common.UserTypes.USER);
@@ -111,62 +110,70 @@ const UserSignUp = ({ navigation }: SignUpScreenProps) => {
     }
   };
 
-  const registerMerchant = async () => {
-    if (email == "" || pass == "" || address == "") {
-      setLoading(false);
-      {
-        Platform.OS === "android"
-          ? ToastAndroid.show("Fill in all the fields!", ToastAndroid.LONG)
-          : Alert.alert("Fill in all the fields!");
-      }
-      return false;
-    }
-    setLoading(true);    
+  // const registerMerchant = async () => {
+  //   if (email == "" || pass == "" || address == "") {
+  //     setLoading(false);
+  //     {
+  //       Platform.OS === "android"
+  //         ? ToastAndroid.show("Fill in all the fields!", ToastAndroid.LONG)
+  //         : Alert.alert("Fill in all the fields!");
+  //     }
+  //     return false;
+  //   }
+  //   setLoading(true);    
 
-    try {
-      // Firebase email/password registration
-      const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-      const user = userCredential.user;
+  //   try {
+  //     // Firebase email/password registration
+  //     const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+  //     const user = userCredential.user;
       
-      let userData: FirebaseUser = {
-        email: email,
-        address: address,
-        firstName: userCredential.user.displayName?.split(" ")[0] ?? "",
-        lastName: userCredential.user.displayName?.split(" ")[1] ?? "",
-        gender: "",
-        pushTokenId: "",
-        createDateTime: new Date().toISOString(),
-        lastLoginDateTime:  new Date().toISOString(),
-      }
+  //     let userData: FirebaseUser = {
+  //       email: email,
+  //       address: address,
+  //       firstName: userCredential.user.displayName?.split(" ")[0] ?? "",
+  //       lastName: userCredential.user.displayName?.split(" ")[1] ?? "",
+  //       gender: "",
+  //       pushTokenId: "",
+  //       createDateTime: new Date().toISOString(),
+  //       lastLoginDateTime: new Date().toISOString(),
+  //       id: "",
+  //       img: "",
+  //       lastUpdatedDateTime: "",
+  //       password: "",
+  //       passwordHash: "",
+  //       phone: "",
+  //       tokenId: "",
+  //       username: ""
+  //     }
 
-      await Auth.registerUser(userData, Common.UserTypes.USER);
+  //     await Auth.registerUser(userData, Common.UserTypes.USER);
 
-      // log user
-      console.log("Merchant registered:", user);
+  //     // log user
+  //     console.log("Merchant registered:", user);
 
-      // hide loading graphic
-      setLoading(false);
+  //     // hide loading graphic
+  //     setLoading(false);
 
-      // navigate to dashboard page
-      navigation.replace("DrawerNavigation", { screen: "Dashboard" });
+  //     // navigate to dashboard page
+  //     navigation.replace("DrawerNavigation", { screen: "Dashboard" });
       
-    } catch (error: any) {
-      // error handling
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          Alert.alert("Error", "This email is already in use.");
-          break;
-        case "auth/invalid-email":
-          Alert.alert("Error", "Please enter a valid email address.");
-          break;
-        case "auth/weak-password":
-          Alert.alert("Error", "Password should be at least 6 characters.");
-          break;
-        default:
-          Alert.alert("Error", error.message);
-      }
-    }
-  };
+  //   } catch (error: any) {
+  //     // error handling
+  //     switch (error.code) {
+  //       case "auth/email-already-in-use":
+  //         Alert.alert("Error", "This email is already in use.");
+  //         break;
+  //       case "auth/invalid-email":
+  //         Alert.alert("Error", "Please enter a valid email address.");
+  //         break;
+  //       case "auth/weak-password":
+  //         Alert.alert("Error", "Password should be at least 6 characters.");
+  //         break;
+  //       default:
+  //         Alert.alert("Error", error.message);
+  //     }
+  //   }
+  // };
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -237,31 +244,33 @@ const UserSignUp = ({ navigation }: SignUpScreenProps) => {
                     textAlign: "center",
                   }}
                 >
-                  Create {role} account
+                  Create user account
                 </Text>
-                <View style={styles.switchContainer}>
-                  <Text>User</Text>
-                  <Switch value={isMerchant} onValueChange={handleToggle} />
-                  <Text>Merchant</Text>
-                </View>
               </View>
             </View>
+            <RegisterUserComponent 
+              onEmailChange={setemail}
+              onPasswordChange={setpass}
+              onCheckChange={setisChecked}/>
 
-            {!isMerchant ? (
-              <RegisterUserComponent />
+            {/* {!isMerchant ? (
+              <RegisterUserComponent 
+              onEmailChange={setemail}
+              onPasswordChange={setpass}
+              onAddressChange={setaddress}/>
             ) : (
               <RegisterMerchantComponent 
                 onEmailChange={setemail}
                 onPasswordChange={setpass}
                 onAddressChange={setaddress}
               />
-            )}
+            )} */}
           </View>
 
           <View>
             <Button
               title={"Sign Up"}
-              onPress={!isMerchant ? registerUser : registerMerchant}
+              onPress={registerUser}
               color={theme.dark ? COLORS.white : COLORS.primary}
               text={colors.card}
             />
@@ -280,7 +289,7 @@ const UserSignUp = ({ navigation }: SignUpScreenProps) => {
                   color: colors.text,
                 }}
               >
-                Already have and account?{" "}
+                Already have an account?{" "}
               </Text>
               <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
                 <Text

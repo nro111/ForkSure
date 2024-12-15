@@ -39,9 +39,9 @@ const SignIn = ({ navigation }: SignInScreenProps) => {
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     //expoClientId: Constants.manifest.extra.expoClientId,
-    androidClientId: "9595583403-oru3geo7ejdaqtirkjv0c4vgnhhtmfl2.apps.googleusercontent.com",
+    androidClientId: "blah",
     // iosClientId: Constants.manifest.extra.iosClientId,
-    webClientId: "9595583403-sj11puth55of3q0gh821sk1qkod90huh.apps.googleusercontent.com",
+    webClientId: "blah",
   });
 
   useEffect(() => {

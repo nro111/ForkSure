@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { database, auth } from '../../firebaseConfig';
-import { equalTo, get, orderByChild, push, query, ref, set, update } from 'firebase/database';
 import { Platform, ToastAndroid,Alert } from 'react-native';
 import User from '../models/userModel';
+import { set } from 'date-fns';
+import { ref, query, orderByChild, equalTo, get, push, update } from 'firebase/database';
 
 async function getAccount() {
   return await AsyncStorage.getItem('account');

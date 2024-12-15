@@ -74,8 +74,8 @@ import Tabs from "../Screens/Shortcode/Tabs";
 import Tables from "../Screens/Shortcode/Tables";
 import Toggles from "../Screens/Shortcode/Toggles";
 import { SafeAreaView } from "react-native";
-import WebViewer from "../components/WebView/ReceiptViewer";
-import MerchantSignUp from "../Screens/Auth/MerchantSignUp";
+//import WebViewer from "../components/WebView/ReceiptViewer";
+//import MerchantSignUp from "../Screens/Auth/MerchantSignUp";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -98,7 +98,7 @@ const StackNavigator = () => {
         <Stack.Screen name={"ComplateProfile"} component={ComplateProfile} />
         <Stack.Screen name={"SignIn"} component={SignIn} />
         <Stack.Screen name={"UserSignUp"} component={UserSignUp} />
-        <Stack.Screen name={"MerchantSignUp"} component={MerchantSignUp} />
+        {/* <Stack.Screen name={"MerchantSignUp"} component={MerchantSignUp} /> */}
         <Stack.Screen name={"ForgatPassword"} component={ForgatPassword} />
         <Stack.Screen name={"EnterCode"} component={EnterCode} />
         <Stack.Screen name={"NewPassword"} component={NewPassword} />
@@ -140,9 +140,6 @@ const StackNavigator = () => {
         <Stack.Screen name={"HelpCenter"} component={HelpCenter} />
         <Stack.Screen name={"ChooseLanguage"} component={Language} />
         <Stack.Screen name={"WriteReview"} component={WriteReview} />
-
-
-
         <Stack.Screen name={"Components"} component={Components} />
         <Stack.Screen name={"Accordion"} component={AccordionScreen} />
         <Stack.Screen name={"BottomSheet"} component={BottomSheet} />
@@ -168,7 +165,7 @@ const StackNavigator = () => {
         <Stack.Screen name={"Tabs"} component={Tabs} />
         <Stack.Screen name={"Tables"} component={Tables} />
         <Stack.Screen name={"Toggles"} component={Toggles} />
-        <Stack.Screen name="WebViewer" component={WebViewer} />
+        {/* <Stack.Screen name="WebViewer" component={WebViewer} /> */}
         
       </Stack.Navigator>
     </SafeAreaView>

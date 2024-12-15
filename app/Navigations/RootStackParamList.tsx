@@ -79,7 +79,7 @@ export type RootStackParamList = {
     Notification: undefined;
     Home: undefined;
     Dashboard: undefined;
-    CameraComponent: undefined;
+    // CameraComponent: undefined;
     Accordion: undefined;
     ActionModals: undefined;
     BottomSheet: undefined;
@@ -105,5 +105,5 @@ export type RootStackParamList = {
     TabStyle4: undefined;
     Datepicker: undefined;
     Search2: undefined;
-    WebViewer: { url: string };
+    //WebViewer: { url: string };
 };
