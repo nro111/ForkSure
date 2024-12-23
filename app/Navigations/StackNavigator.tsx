@@ -1,6 +1,8 @@
 import React from "react";
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { RootStackParamList } from "./RootStackParamList";
+import AllHouseholdMealPlans from "../Screens/MealPlan/AllHouseholdPlans";
+import MyMealPlan from "../Screens/MealPlan/MyPlan";
 import Splash from "../Screens/onbording/Splash";
 import DrawerNavigation from "./DrawerNavigation";
 import Onbording from "../Screens/onbording/Onbording";
@@ -92,6 +94,8 @@ const StackNavigator = () => {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       >
+        <Stack.Screen name={"AllHouseholdMealPlans"} component={AllHouseholdMealPlans} />
+        <Stack.Screen name={"MyMealPlan"} component={MyMealPlan} />
         <Stack.Screen name={"splash"} component={Splash} />
         <Stack.Screen name={"DrawerNavigation"} component={DrawerNavigation} />
         <Stack.Screen name={"Onbording"} component={Onbording} />

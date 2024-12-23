@@ -1,3 +1,20 @@
+interface Subscription {
+    id: string;
+    
+}
+interface BodyDimensions {
+    height: string;
+    weight: string;
+    neckSize: string;
+    hipSize: string;
+    waistSize: string;
+    wristSize: string;
+    bicepSize: string;
+    chestSize: string;
+    thighSize: string;
+    calfSize: string;
+}
+
 interface FirebaseUser {
     createDateTime: string;
     email: string;
@@ -15,6 +32,11 @@ interface FirebaseUser {
     phone: string;
     tokenId: string;
     username: string;
+    bodyDimensions: BodyDimensions;
+    subscription: string;
+    subscriptionStart: string;
+    subscriptionExpiration: string;
+    dateOfBirth: string;
 }
 
 export default FirebaseUser;

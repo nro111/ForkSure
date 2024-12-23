@@ -70,7 +70,7 @@ async function userLogin(email:string, password:string){
   }
 };
 
-async function registerUser(user: any, accountType: string){
+async function registerUser(user: User, accountType: string){
   try {
     // Step 1: Check if the user already exists
     const usersRef = ref(database, accountType);

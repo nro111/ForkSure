@@ -78,7 +78,23 @@ const UserSignUp = ({ navigation }: SignUpScreenProps) => {
         phone: "",
         pushTokenId: "",
         tokenId: "",
-        username: "user1"
+        username: "user1",
+        bodyDimensions: {
+          height: "",
+          weight: "",
+          neckSize: "",
+          hipSize: "",
+          waistSize: "",
+          wristSize: "",
+          bicepSize: "",
+          chestSize: "",
+          thighSize: "",
+          calfSize: ""
+        },
+        subscription: "",
+        subscriptionStart: "",
+        subscriptionExpiration: "",
+        dateOfBirth: ""
       }
 
       await Auth.registerUser(userData, Common.UserTypes.USER);
