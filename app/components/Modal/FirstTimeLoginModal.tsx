@@ -1,115 +1,282 @@
 import React, { Component, useState } from "react";
-import { TextInput, View, StyleSheet, Text } from "react-native";
+import { useTheme } from "@react-navigation/native";
+import { TextInput, View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import Button from "../../components/Button/Button";
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
+import theme, { COLORS, FONTS } from "../../constants/theme";
+import CustomInput from "../Input/CustomInput";
+import Checkbox from '@react-native-community/checkbox';
 
-class FirstTimeLoginModal extends Component {
-  static navigationOptions = {
-    header: null
-  };
+const FirstTimeLoginModal = () => {
+  const [activeStep, setActiveStep] = useState(1);
+  const [loseWeightChecked, setLoseWeightChecked] = useState(false);
+  const [buildMuscleChecked, setBuildMuscleChecked] = useState(false);
+  const [feelBetterChecked, setFeelBetterChecked] = useState(false);
+  const [sleepMoreChecked, setSleepMoreChecked] = useState(false);
+  const [eatHealthierChecked, setEatHealthierChecked] = useState(false);
+  const [naturalEnergyChecked, setNaturalEnergyChecked] = useState(false);
+  const [pass, setpass] = useState("");
 
-  defaultScrollViewProps = {
-    keyboardShouldPersistTaps: 'handled',
-    contentContainerStyle: {
-      flex: 1,
-      justifyContent: 'center'
-    }
-  };
+  const theme = useTheme();
+  const { colors }: { colors: any } = theme;
 
-  onNextStep = () => {
-    console.log('called next step');
-  };
+  const changeStep = (step) => {
+    console.log(step);
+    if (step < 1 || step > 3)
+      return;
 
-  onPrevStep = () => {
-    console.log('called previous step');
-  };
-
-  onSubmitSteps = () => {
-    console.log('called on submit step.');
-  };
-
-  render() {
-    const progressStepsStyle = {
-      activeStepIconBorderColor: '#686868',
-      activeLabelColor: '#686868',
-      activeStepNumColor: 'white',
-      activeStepIconColor: '#686868',
-      completedStepIconColor: '#686868',
-      completedProgressBarColor: '#686868',
-      completedCheckColor: '#4bb543'
-    };
-
-    const buttonTextStyle = {
-      color: '#686868',
-      fontWeight: 'bold'
-    };
-
+    setActiveStep(step);
     return (
-      <View style={{ flex: 1, marginTop: 50 }}>
-        <ProgressSteps {...progressStepsStyle}>
-          <ProgressStep
-            label="First"
-            onNext={this.onNextStep}
-            onPrevious={this.onPrevStep}
-            scrollViewProps={this.defaultScrollViewProps}
-            nextBtnTextStyle={buttonTextStyle}
-            previousBtnTextStyle={buttonTextStyle}
-          >
-            <View style={{ alignItems: 'center' }}>
-              <Text>This is the content within step 1!</Text>
-            </View>
-          </ProgressStep>
-          <ProgressStep
-            label="Second"
-            onNext={this.onNextStep}
-            onPrevious={this.onPrevStep}
-            scrollViewProps={this.defaultScrollViewProps}
-            nextBtnTextStyle={buttonTextStyle}
-            previousBtnTextStyle={buttonTextStyle}
-          >
-            <View style={{ alignItems: 'center' }}>
-              <Text>This is the content within step 2!</Text>
-            </View>
-          </ProgressStep>
-          <ProgressStep
-            label="Third"
-            onNext={this.onNextStep}
-            onPrevious={this.onPrevStep}
-            scrollViewProps={this.defaultScrollViewProps}
-            nextBtnTextStyle={buttonTextStyle}
-            previousBtnTextStyle={buttonTextStyle}
-          >
-            <View style={{ alignItems: 'center' }}>
-              <Text>This is the content within step 3!</Text>
-            </View>
-          </ProgressStep>
-          <ProgressStep
-            label="Fourth"
-            onNext={this.onNextStep}
-            onPrevious={this.onPrevStep}
-            scrollViewProps={this.defaultScrollViewProps}
-            nextBtnTextStyle={buttonTextStyle}
-            previousBtnTextStyle={buttonTextStyle}
-          >
-            <View style={{ alignItems: 'center' }}>
-              <Text>This is the content within step 4!</Text>
-            </View>
-          </ProgressStep>
-          <ProgressStep
-            label="Fifth"
-            onPrevious={this.onPrevStep}
-            onSubmit={this.onSubmitSteps}
-            scrollViewProps={this.defaultScrollViewProps}
-            nextBtnTextStyle={buttonTextStyle}
-            previousBtnTextStyle={buttonTextStyle}
-          >
-            <View style={{ alignItems: 'center' }}>
-              <Text>This is the content within step 5!</Text>
-            </View>
-          </ProgressStep>
-        </ProgressSteps>
+      <View key={step} style={styles.stepWrapper}>
+        <View style={[styles.line, true && styles.activeLine]} />
+        <TouchableOpacity style={styles.circleWrapper}>
+          <View style={[styles.circle, true && styles.activeCircle]}>
+            <Text style={[styles.label, true && styles.activeLabel]}>{step}</Text>
+          </View>
+        </TouchableOpacity>
+        <View style={[styles.line, true && styles.activeLine]} />
       </View>
     );
   }
-}
+
+
+  const renderStep = (step) => {
+    const isActive = activeStep >= step;
+
+    return (
+      <View key={step} style={styles.stepWrapper}>
+        <View style={[styles.line, isActive && styles.activeLine]} />
+        <TouchableOpacity onPress={() => setActiveStep(step)} style={styles.circleWrapper}>
+          <View style={[styles.circle, isActive && styles.activeCircle]}>
+            <Text style={[styles.label, isActive && styles.activeLabel]}>{step}</Text>
+          </View>
+        </TouchableOpacity>
+        <View style={[styles.line, isActive && styles.activeLine]} />
+      </View>
+    );
+  };
+
+  const renderContent = () => {
+    switch (activeStep) {
+      case 1:
+        return (
+          <View style={styles.card}>
+            <Text
+              style={{
+                ...FONTS.fontMedium,
+                fontSize: 15,
+                color: colors.title,
+                marginBottom: 5,
+              }}
+            >
+              Lets start with some basic info<Text style={{ color: "#FF0000" }}>*</Text>
+            </Text>
+          </View>
+        );
+      case 2:
+        return (
+          <View style={styles.card}>
+            <Text
+              style={{
+                ...FONTS.fontMedium,
+                fontSize: 15,
+                color: colors.title,
+                marginBottom: 5,
+              }}
+            >
+              What are your goals?<Text style={{ color: "#FF0000" }}>*</Text>
+            </Text>
+            <View style={styles.checkboxContainer}>
+              <Checkbox
+                value={loseWeightChecked}
+                onValueChange={setLoseWeightChecked}
+                style={styles.checkbox}
+              />
+              <Text style={styles.chLabel}>Lose Weight</Text>
+              <Checkbox
+                value={buildMuscleChecked}
+                onValueChange={setBuildMuscleChecked}
+                style={styles.checkbox}
+              />
+              <Text style={styles.chLabel}>Build Muscle</Text>
+              <Checkbox
+                value={feelBetterChecked}
+                onValueChange={setFeelBetterChecked}
+                style={styles.checkbox}
+              />
+              <Text style={styles.label}>Feel Better</Text>
+              <Checkbox
+                value={sleepMoreChecked}
+                onValueChange={setSleepMoreChecked}
+                style={styles.checkbox}
+              />
+              <Text style={styles.chLabel}>Sleep More</Text>
+              <Checkbox                
+                value={eatHealthierChecked}
+                onValueChange={setEatHealthierChecked}
+                style={styles.checkbox}
+              />
+              <Text style={styles.chLabel}>Eat Healthier</Text>
+              <Checkbox
+                value={naturalEnergyChecked}
+                onValueChange={setNaturalEnergyChecked}
+                style={styles.checkbox}
+              />
+              <Text style={styles.chLabel}>Have More Natural Energy</Text>
+            </View>
+          </View>
+        );
+      case 3:
+        return (
+          <View style={styles.card}>
+            <Text
+              style={{
+                ...FONTS.fontMedium,
+                fontSize: 15,
+                color: colors.title,
+                marginBottom: 5,
+              }}
+            >
+              Tell me what your most favorite and least favorite foods are<Text style={{ color: "#FF0000" }}>*</Text>
+            </Text>
+          </View>
+        );
+      case 4:
+        return (
+          <View style={styles.card}>
+            <Text
+              style={{
+                ...FONTS.fontMedium,
+                fontSize: 15,
+                color: colors.title,
+                marginBottom: 5,
+              }}
+            >
+              Password<Text style={{ color: "#FF0000" }}>*</Text>
+            </Text>
+            <CustomInput
+              type={"password"}
+              onChangeText={(value: any) => setpass(value)}
+              value={pass}
+            />
+          </View>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text>Finish Profile</Text>
+      <View style={styles.stepContainer}>
+        {renderStep(1)}
+        {renderStep(2)}
+        {renderStep(3)}
+      </View>
+      <View style={styles.contentContainer}>
+        {renderContent()}
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          title={"Back"}
+          onPress={() => changeStep(activeStep - 1)}
+          color={theme.dark ? COLORS.white : COLORS.primary}
+          text={colors.card}
+          style={styles.button}
+        />
+        <Button
+          title={"Next"}
+          onPress={() => changeStep(activeStep + 1)}
+          color={theme.dark ? COLORS.white : COLORS.primary}
+          text={colors.card}
+          style={styles.button}
+        />
+        <Button
+          title={"Finish"}
+          //onPress={() => handleLogin(Common.UserTypes.USER)}
+          color={theme.dark ? COLORS.white : COLORS.primary}
+          text={colors.card}
+        />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  checkbox: {
+    alignSelf: 'center',
+  },
+  chLabel: {
+    margin: 8,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+  button: {
+    marginRight: 20
+  },
+  buttonContainer: {
+    flexDirection: 'row', // Make buttons align horizontally
+    justifyContent: 'space-around', // Distribute space evenly
+    alignItems: 'center', // Align buttons vertically
+    padding: 20,
+  },
+  container: {
+    alignItems: 'center',
+    padding: 20,
+    marginTop: 20
+  },
+  stepContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    marginVertical: 20
+  },
+  stepWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  circleWrapper: {
+    zIndex: 1,
+  },
+  circle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activeCircle: {
+    backgroundColor: 'blue',
+  },
+  label: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  activeLabel: {
+    color: 'white',
+  },
+  line: {
+    width: 40,
+    height: 2,
+    backgroundColor: 'black',
+    zIndex: 0,
+  },
+  activeLine: {
+    backgroundColor: 'blue',
+  },
+  contentContainer: {
+    alignItems: 'center',
+  },
+  card: {
+    fontSize: 16,
+    padding: 10,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+  },
+});
 
 export default FirstTimeLoginModal;
