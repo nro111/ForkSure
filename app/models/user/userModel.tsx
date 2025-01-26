@@ -1,6 +1,8 @@
 interface Subscription {
-    id: string;
-    
+    id: number; // Unique subscription ID
+    features: string[]; // List of feature flags
+    monthlyCost?: number; // Monthly cost in USD
+    yearlyCost?: number; // Yearly cost in USD
 }
 interface BodyDimensions {
     height: string;
@@ -15,10 +17,18 @@ interface BodyDimensions {
     calfSize: string;
 }
 
+interface TasteProfile {
+    topCuisines: string[];
+    flavorRanking: string[];
+    favoriteFoods: string[];
+    favoriteIngredients: string[];   
+}
+
 interface FirebaseUser {
     createDateTime: string;
     email: string;
     firstName: string;
+    firstTimeUser: boolean;
     gender: string;
     lastLoginDateTime: string;
     lastName: string;
@@ -33,10 +43,14 @@ interface FirebaseUser {
     tokenId: string;
     username: string;
     bodyDimensions: BodyDimensions;
-    subscription: string;
+    subscription: Subscription;
     subscriptionStart: string;
     subscriptionExpiration: string;
     dateOfBirth: string;
+    preferences: Preferences;
+    mealPlans: MealPlans;
+    progress: Progress;
+    foodWaste?: FoodWaste;
 }
 
 export default FirebaseUser;
