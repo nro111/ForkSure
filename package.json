@@ -52,6 +52,7 @@
     "react-native-document-picker": "^9.3.1",
     "react-native-eject": "^1.0.0",
     "react-native-element-dropdown": "^2.12.2",
+    "react-native-elements": "^3.4.3",
     "react-native-fs": "^2.20.0",
     "react-native-geolocation-service": "^5.3.1",
     "react-native-gesture-handler": "~2.20.2",

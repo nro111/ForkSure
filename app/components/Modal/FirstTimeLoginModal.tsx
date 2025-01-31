@@ -1,11 +1,11 @@
 import React, { Component, useState } from "react";
 import { useTheme } from "@react-navigation/native";
 import { TextInput, View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { CheckBox } from "react-native-elements";
 import Button from "../../components/Button/Button";
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import theme, { COLORS, FONTS } from "../../constants/theme";
 import CustomInput from "../Input/CustomInput";
-import Checkbox from '@react-native-community/checkbox';
 
 const FirstTimeLoginModal = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -87,40 +87,40 @@ const FirstTimeLoginModal = () => {
               What are your goals?<Text style={{ color: "#FF0000" }}>*</Text>
             </Text>
             <View style={styles.checkboxContainer}>
-              <Checkbox
-                value={loseWeightChecked}
-                onValueChange={setLoseWeightChecked}
-                style={styles.checkbox}
+              <CheckBox
+                checked={loseWeightChecked}
+                onPress={() => setLoseWeightChecked(!loseWeightChecked)}
+                // style={styles.checkbox}
               />
               <Text style={styles.chLabel}>Lose Weight</Text>
-              <Checkbox
-                value={buildMuscleChecked}
-                onValueChange={setBuildMuscleChecked}
-                style={styles.checkbox}
+              <CheckBox
+                checked={buildMuscleChecked}
+                onPress={() => setBuildMuscleChecked(!buildMuscleChecked)}
+                // style={styles.checkbox}
               />
               <Text style={styles.chLabel}>Build Muscle</Text>
-              <Checkbox
-                value={feelBetterChecked}
-                onValueChange={setFeelBetterChecked}
-                style={styles.checkbox}
+              <CheckBox
+                checked={feelBetterChecked}
+                onPress={() => setFeelBetterChecked(!feelBetterChecked)}
+                // style={styles.checkbox}
               />
               <Text style={styles.label}>Feel Better</Text>
-              <Checkbox
-                value={sleepMoreChecked}
-                onValueChange={setSleepMoreChecked}
-                style={styles.checkbox}
+              <CheckBox
+                checked={sleepMoreChecked}
+                onPress={() => setSleepMoreChecked(!sleepMoreChecked)}
+                // style={styles.checkbox}
               />
               <Text style={styles.chLabel}>Sleep More</Text>
-              <Checkbox                
-                value={eatHealthierChecked}
-                onValueChange={setEatHealthierChecked}
-                style={styles.checkbox}
+              <CheckBox                
+                checked={eatHealthierChecked}
+                onPress={() => setEatHealthierChecked(!eatHealthierChecked)}
+                // style={styles.checkbox}
               />
               <Text style={styles.chLabel}>Eat Healthier</Text>
-              <Checkbox
-                value={naturalEnergyChecked}
-                onValueChange={setNaturalEnergyChecked}
-                style={styles.checkbox}
+              <CheckBox
+                checked={naturalEnergyChecked}
+                onPress={() => setNaturalEnergyChecked(!naturalEnergyChecked)}
+                // style={styles.checkbox}
               />
               <Text style={styles.chLabel}>Have More Natural Energy</Text>
             </View>
