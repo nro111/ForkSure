@@ -155,7 +155,9 @@ const FirstTimeLoginModal = () => {
             >
               Tell me what your most favorite foods are<Text style={{ color: "#FF0000" }}>*</Text>
             </Text>
-            <DynamicTagInput />
+            <DynamicTagInput onTagsChange={function (tags: { text: string; }[]): void {
+              console.log(tags);
+            } } />
             <Text
               style={{
                 ...FONTS.fontMedium,
@@ -166,7 +168,9 @@ const FirstTimeLoginModal = () => {
             >
               And what your least favorite foods are<Text style={{ color: "#FF0000" }}>*</Text>
             </Text>
-            <DynamicTagInput />
+            <DynamicTagInput onTagsChange={function (tags: { text: string; }[]): void {
+              console.log(tags);
+            } } />
           </View>
         );
       case 4:

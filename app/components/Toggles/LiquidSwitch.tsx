@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Animated, { useSharedValue, withSpring, useAnimatedStyle } from "react-native-reanimated";
 
+// Colors and other constants remain the same...
 const colors = [
   "#531CB3",
   "#7149EE",
@@ -20,7 +21,11 @@ const colors = [
   "#7149EE",
 ];
 
-const DynamicTagInput = () => {
+interface DynamicTagInputProps {
+  onTagsChange: (tags: { text: string;}[]) => void; // Callback to notify parent of tag changes
+}
+
+const DynamicTagInput: React.FC<DynamicTagInputProps> = ({ onTagsChange }) => {
   const [tags, setTags] = useState<{ text: string; width: number; id: number }[]>([]);
   const [inputText, setInputText] = useState("");
   const inputRef = useRef<TextInput>(null);
@@ -37,24 +42,34 @@ const DynamicTagInput = () => {
     };
 
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setTags([...tags, newTag]);
+    const updatedTags = [...tags, newTag];
+    setTags(updatedTags);
     setInputText("");
     setInputWidth(50);
+
+    // Notify parent about the updated tags
+    onTagsChange(updatedTags);
   };
 
   const handleRemoveTag = (id: number) => {
+    const updatedTags = tags.filter((tag) => tag.id !== id);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setTags(tags.filter((tag) => tag.id !== id));
+    setTags(updatedTags);
+
+    // Notify parent about the updated tags
+    onTagsChange(updatedTags);
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>Dynamic styled Inputfields with React Native!</Text>
+      <Text style={styles.instructions}>Hit "Enter" to confirm, Tap a pill to remove</Text>
+
       <View style={styles.tagContainer}>
         {tags.map((tag, index) => (
           <AnimatedTag key={tag.id} text={tag.text} width={tag.width} color={colors[index % colors.length]} onRemove={() => handleRemoveTag(tag.id)} />
         ))}
 
-        {/* Input box that expands dynamically */}
         <TextInput
           ref={inputRef}
           style={[styles.input, { width: inputWidth }]}
