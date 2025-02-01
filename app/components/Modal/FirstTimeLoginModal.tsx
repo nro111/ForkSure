@@ -45,9 +45,9 @@ const FirstTimeLoginModal = () => {
     );
   }
 
-
   const renderStep = (step) => {
     const isActive = activeStep >= step;
+    
 
     return (
       <View key={step} style={styles.stepWrapper}>
@@ -61,6 +61,10 @@ const FirstTimeLoginModal = () => {
       </View>
     );
   };
+
+  const saveAndClose = () => {
+    
+  }
 
   const renderContent = () => {
     switch (activeStep) {
@@ -244,7 +248,7 @@ const FirstTimeLoginModal = () => {
         {activeStep === 4 &&
           <Button
             title={"Finish"}
-            //onPress={() => handleLogin(Common.UserTypes.USER)}
+            onPress={() => saveAndClose()}
             color={theme.dark ? COLORS.white : COLORS.primary}
             text={colors.card}
           />

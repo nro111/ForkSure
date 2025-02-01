@@ -42,14 +42,14 @@ interface FirebaseUser {
     phone: string;
     tokenId: string;
     username: string;
-    bodyDimensions: BodyDimensions;
-    subscription: Subscription;
+    bodyDimensions?: BodyDimensions;
+    subscription?: Subscription;
     subscriptionStart: string;
     subscriptionExpiration: string;
     dateOfBirth: string;
-    preferences: Preferences;
-    mealPlans: MealPlans;
-    progress: Progress;
+    preferences?: Preferences;
+    mealPlans?: MealPlans;
+    progress?: Progress;
     foodWaste?: FoodWaste;
 }
 
