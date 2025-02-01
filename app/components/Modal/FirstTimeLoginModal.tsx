@@ -6,6 +6,9 @@ import Button from "../../components/Button/Button";
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import theme, { COLORS, FONTS } from "../../constants/theme";
 import CustomInput from "../Input/CustomInput";
+import AutocompleteInput from 'react-native-autocomplete-input';
+import LiquidSwitch from "../Toggles/LiquidSwitch";
+import LiquidTagInput from "../Toggles/LiquidSwitch";
 
 const FirstTimeLoginModal = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -15,6 +18,10 @@ const FirstTimeLoginModal = () => {
   const [sleepMoreChecked, setSleepMoreChecked] = useState(false);
   const [eatHealthierChecked, setEatHealthierChecked] = useState(false);
   const [naturalEnergyChecked, setNaturalEnergyChecked] = useState(false);
+  const [favoriteFoodQuery, setFavoriteFoodQuery] = useState('');
+  const [favoriteFoodData, setFavoriteFoodData] = useState([]);
+  const [leastFavoriteFoodQuery, setLeastFavoriteFoodQuery] = useState('');
+  const [leastFavoriteFoodData, setLeastFavoriteFoodData] = useState([]);
   const [pass, setpass] = useState("");
 
   const theme = useTheme();
@@ -22,7 +29,7 @@ const FirstTimeLoginModal = () => {
 
   const changeStep = (step) => {
     console.log(step);
-    if (step < 1 || step > 3)
+    if (step < 1 || step > 4)
       return;
 
     setActiveStep(step);
@@ -90,37 +97,47 @@ const FirstTimeLoginModal = () => {
               <CheckBox
                 checked={loseWeightChecked}
                 onPress={() => setLoseWeightChecked(!loseWeightChecked)}
-                // style={styles.checkbox}
+              // style={styles.checkbox}
               />
               <Text style={styles.chLabel}>Lose Weight</Text>
+            </View>
+            <View style={styles.checkboxContainer}>
               <CheckBox
                 checked={buildMuscleChecked}
                 onPress={() => setBuildMuscleChecked(!buildMuscleChecked)}
-                // style={styles.checkbox}
+              // style={styles.checkbox}
               />
               <Text style={styles.chLabel}>Build Muscle</Text>
+            </View>
+            <View style={styles.checkboxContainer}>
               <CheckBox
                 checked={feelBetterChecked}
                 onPress={() => setFeelBetterChecked(!feelBetterChecked)}
-                // style={styles.checkbox}
+              // style={styles.checkbox}
               />
-              <Text style={styles.label}>Feel Better</Text>
+              <Text style={styles.chLabel}>Feel Better</Text>
+            </View>
+            <View style={styles.checkboxContainer}>
               <CheckBox
                 checked={sleepMoreChecked}
                 onPress={() => setSleepMoreChecked(!sleepMoreChecked)}
-                // style={styles.checkbox}
+              // style={styles.checkbox}
               />
               <Text style={styles.chLabel}>Sleep More</Text>
-              <CheckBox                
+            </View>
+            <View style={styles.checkboxContainer}>
+              <CheckBox
                 checked={eatHealthierChecked}
                 onPress={() => setEatHealthierChecked(!eatHealthierChecked)}
-                // style={styles.checkbox}
+              // style={styles.checkbox}
               />
               <Text style={styles.chLabel}>Eat Healthier</Text>
+            </View>
+            <View style={styles.checkboxContainer}>
               <CheckBox
                 checked={naturalEnergyChecked}
                 onPress={() => setNaturalEnergyChecked(!naturalEnergyChecked)}
-                // style={styles.checkbox}
+              // style={styles.checkbox}
               />
               <Text style={styles.chLabel}>Have More Natural Energy</Text>
             </View>
@@ -137,8 +154,44 @@ const FirstTimeLoginModal = () => {
                 marginBottom: 5,
               }}
             >
-              Tell me what your most favorite and least favorite foods are<Text style={{ color: "#FF0000" }}>*</Text>
+              Tell me what your most favorite foods are<Text style={{ color: "#FF0000" }}>*</Text>
             </Text>
+            <LiquidTagInput />
+            <Text
+              style={{
+                ...FONTS.fontMedium,
+                fontSize: 15,
+                color: colors.title,
+                marginBottom: 5,
+              }}
+            >
+              And what your least favorite foods are<Text style={{ color: "#FF0000" }}>*</Text>
+            </Text>
+            <LiquidTagInput />
+            {/* <AutocompleteInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              data={favoriteFoodData}
+              defaultValue={favoriteFoodQuery}
+              onChangeText={handleSearch}
+              placeholder="Search..."
+              renderItem={({ item }) => (
+                <Text>{item.name}</Text> // Customize how items are displayed
+              )}
+              keyExtractor={(item) => item.id}
+            /> */}
+            {/* <AutocompleteInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              data={leastFavoriteFoodData}
+              defaultValue={leastFavoriteFoodQuery}
+              onChangeText={handleSearch}
+              placeholder="Search..."
+              renderItem={({ item }) => (
+                <Text>{item.name}</Text> // Customize how items are displayed
+              )}
+              keyExtractor={(item) => item.id}
+            /> */}
           </View>
         );
       case 4:
@@ -173,6 +226,7 @@ const FirstTimeLoginModal = () => {
         {renderStep(1)}
         {renderStep(2)}
         {renderStep(3)}
+        {renderStep(4)}
       </View>
       <View style={styles.contentContainer}>
         {renderContent()}
@@ -192,12 +246,15 @@ const FirstTimeLoginModal = () => {
           text={colors.card}
           style={styles.button}
         />
-        <Button
-          title={"Finish"}
-          //onPress={() => handleLogin(Common.UserTypes.USER)}
-          color={theme.dark ? COLORS.white : COLORS.primary}
-          text={colors.card}
-        />
+
+        {activeStep === 4 &&
+          <Button
+            title={"Finish"}
+            //onPress={() => handleLogin(Common.UserTypes.USER)}
+            color={theme.dark ? COLORS.white : COLORS.primary}
+            text={colors.card}
+          />
+        }
       </View>
     </View>
   );
