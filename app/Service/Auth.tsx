@@ -1,9 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { database, auth } from '../../firebaseConfig';
 import { Platform, ToastAndroid,Alert } from 'react-native';
-import User from '../models/userModel';
-import { set } from 'date-fns';
-import { ref, query, orderByChild, equalTo, get, push, update } from 'firebase/database';
+import User from '../models/user/userModel';
+import { ref, query, orderByChild, equalTo, get, push, update, set } from 'firebase/database';
 
 async function getAccount() {
   return await AsyncStorage.getItem('account');
@@ -70,7 +69,7 @@ async function userLogin(email:string, password:string){
   }
 };
 
-async function registerUser(user: any, accountType: string){
+async function registerUser(user: User, accountType: string){
   try {
     // Step 1: Check if the user already exists
     const usersRef = ref(database, accountType);

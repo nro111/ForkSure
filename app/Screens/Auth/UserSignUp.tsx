@@ -29,7 +29,7 @@ import { auth } from "../../../firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import Auth from "../../Service/Auth";
 import Common from "../../constants/common";
-import FirebaseUser from "../../models/userModel";
+import FirebaseUser from "../../models/user/userModel";
 import RegisterUserComponent from "../../components/register/RegisterUserComponent";
 import RegisterMerchantComponent from "../../components/register/RegisterMerchantComponent";
 
@@ -67,6 +67,7 @@ const UserSignUp = ({ navigation }: SignUpScreenProps) => {
         createDateTime: new Date().toISOString(),
         email: email,
         firstName: userCredential.user.displayName?.split(" ")[0] ?? "",
+        firstTimeUser: true,
         gender: "",
         id: "",
         img: "",
@@ -78,7 +79,23 @@ const UserSignUp = ({ navigation }: SignUpScreenProps) => {
         phone: "",
         pushTokenId: "",
         tokenId: "",
-        username: "user1"
+        username: "user1",
+        bodyDimensions: {
+          height: "",
+          weight: "",
+          neckSize: "",
+          hipSize: "",
+          waistSize: "",
+          wristSize: "",
+          bicepSize: "",
+          chestSize: "",
+          thighSize: "",
+          calfSize: ""
+        },
+        subscription: "",
+        subscriptionStart: "",
+        subscriptionExpiration: "",
+        dateOfBirth: ""
       }
 
       await Auth.registerUser(userData, Common.UserTypes.USER);

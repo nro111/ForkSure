@@ -3,6 +3,8 @@ import { BottomTabParamList } from "./BottomTabParamList";
 
 export type RootStackParamList = {
     DrawerNavigation: NavigatorScreenParams<BottomTabParamList>;
+    AllHouseholdMealPlans: undefined;
+    MyMealPlan: undefined;
     Damo: undefined;
     splash: undefined;
     ChooseLanguage:{ data?: any };
