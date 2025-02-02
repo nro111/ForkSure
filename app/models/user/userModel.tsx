@@ -1,3 +1,8 @@
+import Preferences from '../user/interfaces/preferences';
+import MealPlans from '../user/interfaces/mealPlans';
+import Progress from '../user/interfaces/progress';
+import FoodWaste from '../user/interfaces/foodWaste';
+
 interface Subscription {
     id: number; // Unique subscription ID
     features: string[]; // List of feature flags

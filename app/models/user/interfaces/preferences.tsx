@@ -14,3 +14,5 @@ interface FlavorProfile {
     sweet: number; // 1-5 scale
     sour: number; // 1-5 scale
 }
+
+export default Preferences;

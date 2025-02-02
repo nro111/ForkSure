@@ -106,7 +106,7 @@ const CustomNavigation = ({state,navigation,descriptors}) => {
                             icon4.value = withSpring(0);
                             icon5.value = withSpring(0);
 
-                        }else if(route.name == "Markets"){
+                        }else if(route.name == "Onboarding"){
                             var a =  SIZES.width / 5;
                             icon2.value = withSpring(10);
                             icon1.value = withSpring(0);
@@ -153,7 +153,7 @@ const CustomNavigation = ({state,navigation,descriptors}) => {
                                     style={[
                                         route.name == "Dashboard"?
                                         tabIcon1Style :
-                                        route.name == "Markets" ?
+                                        route.name == "Onboarding" ?
                                         tabIcon2Style :
                                         route.name == "Change"?
                                         tabIcon3Style :
@@ -174,7 +174,7 @@ const CustomNavigation = ({state,navigation,descriptors}) => {
                                         }}
                                         source={
                                             label === "Dashboard" ? home :
-                                            label === "Markets" ? market:
+                                            label === "Onboarding" ? market:
                                             label === "Change" ? exchange:
                                             label === "Wallet" ? wallet :
                                             label === "Profile" && profile
