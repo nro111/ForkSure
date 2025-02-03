@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  Modal
 } from "react-native";
 import { GlobalStyleSheet } from "../../constants/StyleSheet";
 import { COLORS, FONTS } from "../../constants/theme";
@@ -21,7 +22,8 @@ import FirebaseServices from "../../Service/FirebaseServices";
 import Utils from "../../utilities/utils";
 import LocationTracker from "../../components/Location/LocationTracker";
 import Collapsible from "react-native-collapsible";
-//import { useLocales } from 'expo-localization';
+import FirstTimeLoginModal from "../../components/Modal/FirstTimeLoginModal";
+import FirebaseUser from "../../models/user/userModel";
 
 type HomeScreenProps = { navigation: DrawerNavigationProp<RootStackParamList, "Dashboard"> };
 
@@ -30,6 +32,9 @@ const Home = ({ navigation }: HomeScreenProps) => {
   const { colors }: { colors: any } = theme;
   const [receiptData, setReceiptData] = useState<any[]>([]);
   const [activeSections, setActiveSections] = useState<string[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [user, setUser] = useState<FirebaseUser | undefined>(undefined);
+
   // const locale = useLocales ? useLocales() : 'en'; // Default to 'en' if undefined
   // console.log('Current Locale:', locale);
   useEffect(() => {
@@ -186,6 +191,18 @@ const Home = ({ navigation }: HomeScreenProps) => {
           )}
         </View>
       </ScrollView> */}
+
+      <Modal
+        animationType="slide" // or 'fade' or 'none'
+        transparent={false} // Set to true for a transparent background
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)} // Android back button behavior
+      >
+        <View>
+          <FirstTimeLoginModal />
+          {/* <Button title="Close Modal" onPress={() => setModalVisible(false)} /> */}
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };

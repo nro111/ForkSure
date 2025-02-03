@@ -12,6 +12,8 @@ import RegisterUserComponent from '../../components/register/RegisterUserCompone
 import { COLORS, FONTS } from '../../constants/theme';
 import { IMAGES } from '../../constants/Images';
 import { useTheme } from "@react-navigation/native";
+import { setUser } from '../../redux/reducer/user';
+import { useDispatch } from "react-redux";
 
 type LoginSignupProps = StackScreenProps<RootStackParamList, "LoginSignup">;
 
@@ -22,7 +24,7 @@ const LoginSignup = ({ navigation }: LoginSignupProps) => {
   const onFacebookSignup = () => { };
   const onAppleSignup = () => { };
   const onLogin = () => { navigation.navigate("SignIn") };
-
+  const dispatch = useDispatch();
   const [isChecked, setisChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setemail] = useState("");
@@ -45,7 +47,7 @@ const LoginSignup = ({ navigation }: LoginSignupProps) => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
       const user = userCredential.user;
 
-      let userData: FirebaseUser = {
+      let userData: any = {
         address: "",
         createDateTime: new Date().toISOString(),
         email: email,
@@ -87,6 +89,8 @@ const LoginSignup = ({ navigation }: LoginSignupProps) => {
 
       // hide loading graphic
       setLoading(false);
+
+      dispatch(setUser(userData));
 
       // navigate to dashboard page
       navigation.replace("DrawerNavigation", { screen: "Dashboard" });

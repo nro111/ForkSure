@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { database, auth } from '../../firebaseConfig';
-import { Platform, ToastAndroid,Alert } from 'react-native';
+import { Platform, ToastAndroid, Alert } from 'react-native';
 import User from '../models/user/userModel';
 import { ref, query, orderByChild, equalTo, get, push, update, set } from 'firebase/database';
 
@@ -16,7 +16,7 @@ async function logout() {
   return await AsyncStorage.removeItem('account');
 }
 
-async function userLogin(email:string, password:string){
+async function userLogin(email: string, password: string) {
   try {
 
     if (!email || !password) {
@@ -41,24 +41,27 @@ async function userLogin(email:string, password:string){
       });
 
       if (userFound) {
-        {Platform.OS === 'android' ? 
-          ToastAndroid.show('Login Successfully!' , ToastAndroid.LONG)  
-        :
-          Alert.alert('Login Successfully!')
+        {
+          Platform.OS === 'android' ?
+            ToastAndroid.show('Login Successfully!', ToastAndroid.LONG)
+            :
+            Alert.alert('Login Successfully!')
         }
         return userFound; // Successfully authenticated user
       } else {
-        {Platform.OS === 'android' ?
-            ToastAndroid.show('Invalid password!' , ToastAndroid.LONG)
-          :
+        {
+          Platform.OS === 'android' ?
+            ToastAndroid.show('Invalid password!', ToastAndroid.LONG)
+            :
             Alert.alert('Invalid password!')
         }
         return null;
       }
     } else {
-      {Platform.OS === 'android' ?
-        ToastAndroid.show('Invalid email!' , ToastAndroid.LONG)
-        :
+      {
+        Platform.OS === 'android' ?
+          ToastAndroid.show('Invalid email!', ToastAndroid.LONG)
+          :
           Alert.alert('Invalid email!')
       }
       return null;
@@ -69,7 +72,7 @@ async function userLogin(email:string, password:string){
   }
 };
 
-async function registerUser(user: User, accountType: string){
+async function registerUser(user: User, accountType: string) {
   try {
     // Step 1: Check if the user already exists
     const usersRef = ref(database, accountType);
@@ -78,18 +81,19 @@ async function registerUser(user: User, accountType: string){
     const snapshot = await get(emailQuery);
 
     if (snapshot.exists()) {
-      {Platform.OS === 'android' ?
+      {
+        Platform.OS === 'android' ?
           ToastAndroid.show('User already exists with this email.', ToastAndroid.LONG)
-        :
+          :
           Alert.alert('User already exists with this email.')
       }
       return { success: false, message: "User already exists." };
     } else {
       // Generate a unique ID for the new user
-      const newUserRef = push(usersRef); 
+      const newUserRef = push(usersRef);
 
       // Save user data to Firebase
-      await set(newUserRef, user); 
+      await set(newUserRef, user);
 
       return true;
     }
@@ -99,27 +103,27 @@ async function registerUser(user: User, accountType: string){
   }
 };
 
-async function updateUser(email:string, updates:any) {
+async function updateUser(email: string, updates: any) {
   try {
     // Find the user by email
     const usersRef = ref(database, "users");
     const emailQuery = query(usersRef, orderByChild("email"), equalTo(email));
-    
+
     const snapshot = await get(emailQuery);
 
     if (snapshot.exists()) {
       // Loop through matching records (assuming one user per email)
-      let userKey = null;
+      let userKey = '';
       snapshot.forEach((childSnapshot) => {
         userKey = childSnapshot.key; // Get the user's unique key
       });
 
       if (userKey) {
         const userRef = ref(database, `users/${userKey}`);
-        
+
         // Update the fields specified in the 'updates' object
         await update(userRef, updates);
-        
+
         console.log("User data updated successfully:", updates);
         return await fetchUser(userKey, "user");
 
@@ -137,18 +141,18 @@ async function updateUser(email:string, updates:any) {
   }
 };
 
-async function fetchUser(email:string, type:string) {
+async function fetchUser(email: string, type: string) {
   try {
     // Find the user by email
     const usersRef = ref(database, type);
     const emailQuery = query(usersRef, orderByChild("email"), equalTo(email));
-    
+
     const snapshot = await get(emailQuery);
 
     if (snapshot.exists()) {
       let userData = null;
       snapshot.forEach((childSnapshot) => {
-        userData = childSnapshot.val();        
+        userData = childSnapshot.val();
       });
       return userData;
     } else {
