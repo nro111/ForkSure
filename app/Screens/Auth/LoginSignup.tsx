@@ -90,6 +90,7 @@ const LoginSignup = ({ navigation }: LoginSignupProps) => {
       // hide loading graphic
       setLoading(false);
 
+      // set the user data to the state
       dispatch(setUser(userData));
 
       // navigate to dashboard page
