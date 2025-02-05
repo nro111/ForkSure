@@ -1,3 +1,8 @@
+import Preferences from '../user/interfaces/preferences';
+import MealPlans from '../user/interfaces/mealPlans';
+import Progress from '../user/interfaces/progress';
+import FoodWaste from '../user/interfaces/foodWaste';
+
 interface Subscription {
     id: number; // Unique subscription ID
     features: string[]; // List of feature flags
@@ -42,14 +47,14 @@ interface FirebaseUser {
     phone: string;
     tokenId: string;
     username: string;
-    bodyDimensions: BodyDimensions;
-    subscription: Subscription;
+    bodyDimensions?: BodyDimensions;
+    subscription?: Subscription;
     subscriptionStart: string;
     subscriptionExpiration: string;
     dateOfBirth: string;
-    preferences: Preferences;
-    mealPlans: MealPlans;
-    progress: Progress;
+    preferences?: Preferences;
+    mealPlans?: MealPlans;
+    progress?: Progress;
     foodWaste?: FoodWaste;
 }
 

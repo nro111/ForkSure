@@ -9,6 +9,7 @@ import CustomInput from "../Input/CustomInput";
 import AutocompleteInput from 'react-native-autocomplete-input';
 import LiquidSwitch from "../Toggles/LiquidSwitch";
 import LiquidTagInput from "../Toggles/LiquidSwitch";
+import DynamicTagInput from "../Toggles/LiquidSwitch";
 
 const FirstTimeLoginModal = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -18,10 +19,8 @@ const FirstTimeLoginModal = () => {
   const [sleepMoreChecked, setSleepMoreChecked] = useState(false);
   const [eatHealthierChecked, setEatHealthierChecked] = useState(false);
   const [naturalEnergyChecked, setNaturalEnergyChecked] = useState(false);
-  const [favoriteFoodQuery, setFavoriteFoodQuery] = useState('');
-  const [favoriteFoodData, setFavoriteFoodData] = useState([]);
-  const [leastFavoriteFoodQuery, setLeastFavoriteFoodQuery] = useState('');
-  const [leastFavoriteFoodData, setLeastFavoriteFoodData] = useState([]);
+  const [favoriteFoods, setFavoriteFoods] = useState([]);
+  const [leastFavoriteFoods, setLeastFavoriteFoods] = useState([]);
   const [pass, setpass] = useState("");
 
   const theme = useTheme();
@@ -46,9 +45,9 @@ const FirstTimeLoginModal = () => {
     );
   }
 
-
   const renderStep = (step) => {
     const isActive = activeStep >= step;
+    
 
     return (
       <View key={step} style={styles.stepWrapper}>
@@ -62,6 +61,10 @@ const FirstTimeLoginModal = () => {
       </View>
     );
   };
+
+  const saveAndClose = () => {
+    
+  }
 
   const renderContent = () => {
     switch (activeStep) {
@@ -156,7 +159,9 @@ const FirstTimeLoginModal = () => {
             >
               Tell me what your most favorite foods are<Text style={{ color: "#FF0000" }}>*</Text>
             </Text>
-            <LiquidTagInput />
+            <DynamicTagInput onTagsChange={function (tags: { text: string; }[]): void {
+              console.log(tags);
+            } } />
             <Text
               style={{
                 ...FONTS.fontMedium,
@@ -167,31 +172,9 @@ const FirstTimeLoginModal = () => {
             >
               And what your least favorite foods are<Text style={{ color: "#FF0000" }}>*</Text>
             </Text>
-            <LiquidTagInput />
-            {/* <AutocompleteInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              data={favoriteFoodData}
-              defaultValue={favoriteFoodQuery}
-              onChangeText={handleSearch}
-              placeholder="Search..."
-              renderItem={({ item }) => (
-                <Text>{item.name}</Text> // Customize how items are displayed
-              )}
-              keyExtractor={(item) => item.id}
-            /> */}
-            {/* <AutocompleteInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              data={leastFavoriteFoodData}
-              defaultValue={leastFavoriteFoodQuery}
-              onChangeText={handleSearch}
-              placeholder="Search..."
-              renderItem={({ item }) => (
-                <Text>{item.name}</Text> // Customize how items are displayed
-              )}
-              keyExtractor={(item) => item.id}
-            /> */}
+            <DynamicTagInput onTagsChange={function (tags: { text: string; }[]): void {
+              console.log(tags);
+            } } />
           </View>
         );
       case 4:
@@ -206,6 +189,21 @@ const FirstTimeLoginModal = () => {
               }}
             >
               Password<Text style={{ color: "#FF0000" }}>*</Text>
+            </Text>
+            <CustomInput
+              type={"password"}
+              onChangeText={(value: any) => setpass(value)}
+              value={pass}
+            />
+                        <Text
+              style={{
+                ...FONTS.fontMedium,
+                fontSize: 15,
+                color: colors.title,
+                marginBottom: 5,
+              }}
+            >
+              Confirm Password<Text style={{ color: "#FF0000" }}>*</Text>
             </Text>
             <CustomInput
               type={"password"}
@@ -250,7 +248,7 @@ const FirstTimeLoginModal = () => {
         {activeStep === 4 &&
           <Button
             title={"Finish"}
-            //onPress={() => handleLogin(Common.UserTypes.USER)}
+            onPress={() => saveAndClose()}
             color={theme.dark ? COLORS.white : COLORS.primary}
             text={colors.card}
           />

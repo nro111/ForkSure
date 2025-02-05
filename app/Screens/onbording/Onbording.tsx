@@ -8,6 +8,7 @@ import {Feather } from "@expo/vector-icons";
 import { IMAGES } from '../../constants/Images';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../Navigations/RootStackParamList';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 
 const DATA = [
@@ -29,9 +30,9 @@ const DATA = [
     },
 ]
 
-type OnbordingScreenProps = StackScreenProps<RootStackParamList, 'Onbording'>;
+type OnboardingScreenProps = { navigation: DrawerNavigationProp<RootStackParamList, "Onboarding"> };
 
-const Onbording = ({ navigation } : OnbordingScreenProps) => {
+const Onboarding = ({ navigation } : OnboardingScreenProps) => {
 
     const theme = useTheme();
     const { colors } : {colors : any} = theme;
@@ -362,4 +363,4 @@ const styles = StyleSheet.create({
     }
 
 })
-export default Onbording;
+export default Onboarding;

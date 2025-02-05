@@ -98,3 +98,5 @@ interface DailyGoals {
     meal_plan_followed: boolean;
     comments: string; // Additional notes
 }
+
+export default Progress;

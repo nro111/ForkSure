@@ -44,7 +44,7 @@ const Settings = ({ navigation } : SettingsScreenProps) => {
     const handleLogout = async () => {
         dispatch(removeUser());
         Auth.logout();
-        navigation.navigate('Onbording');
+        navigation.navigate('Onboarding');
     }
 
     return (

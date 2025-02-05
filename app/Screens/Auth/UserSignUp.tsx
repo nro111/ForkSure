@@ -92,10 +92,13 @@ const UserSignUp = ({ navigation }: SignUpScreenProps) => {
           thighSize: "",
           calfSize: ""
         },
-        subscription: "",
         subscriptionStart: "",
         subscriptionExpiration: "",
-        dateOfBirth: ""
+        dateOfBirth: "",
+        preferences: undefined,
+        mealPlans: undefined,
+        progress: undefined,
+        subscription: undefined
       }
 
       await Auth.registerUser(userData, Common.UserTypes.USER);

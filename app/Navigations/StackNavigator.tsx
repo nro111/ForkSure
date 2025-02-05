@@ -5,7 +5,7 @@ import AllHouseholdMealPlans from "../Screens/MealPlan/AllHouseholdPlans";
 import MyMealPlan from "../Screens/MealPlan/MyPlan";
 import Splash from "../Screens/onbording/Splash";
 import DrawerNavigation from "./DrawerNavigation";
-import Onbording from "../Screens/onbording/Onbording";
+import Onboarding from "../Screens/onbording/Onbording";
 import ComplateProfile from "../Screens/Auth/ComplateProfile";
 import SignIn from "../Screens/Auth/SignIn";
 import UserSignUp from "../Screens/Auth/UserSignUp";
@@ -76,8 +76,8 @@ import Tabs from "../Screens/Shortcode/Tabs";
 import Tables from "../Screens/Shortcode/Tables";
 import Toggles from "../Screens/Shortcode/Toggles";
 import { SafeAreaView } from "react-native";
+import LoginSignup from "../Screens/Auth/LoginSignup";
 //import WebViewer from "../components/WebView/ReceiptViewer";
-//import MerchantSignUp from "../Screens/Auth/MerchantSignUp";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -87,7 +87,7 @@ const StackNavigator = () => {
     <SafeAreaView style={{width:'100%', flex: 1 }}>
       <Stack.Navigator
         //initialRouteName={"splash"}
-        initialRouteName={"SignIn"}
+        initialRouteName={"LoginSignup"}
         screenOptions={{
           headerShown: false,
           cardStyle: { backgroundColor: "transparent",flex:1 },
@@ -98,11 +98,11 @@ const StackNavigator = () => {
         <Stack.Screen name={"MyMealPlan"} component={MyMealPlan} />
         <Stack.Screen name={"splash"} component={Splash} />
         <Stack.Screen name={"DrawerNavigation"} component={DrawerNavigation} />
-        <Stack.Screen name={"Onbording"} component={Onbording} />
+        <Stack.Screen name={"Onboarding"} component={Onboarding} />
         <Stack.Screen name={"ComplateProfile"} component={ComplateProfile} />
         <Stack.Screen name={"SignIn"} component={SignIn} />
         <Stack.Screen name={"UserSignUp"} component={UserSignUp} />
-        {/* <Stack.Screen name={"MerchantSignUp"} component={MerchantSignUp} /> */}
+        <Stack.Screen name={"LoginSignup"} component={LoginSignup} />
         <Stack.Screen name={"ForgatPassword"} component={ForgatPassword} />
         <Stack.Screen name={"EnterCode"} component={EnterCode} />
         <Stack.Screen name={"NewPassword"} component={NewPassword} />

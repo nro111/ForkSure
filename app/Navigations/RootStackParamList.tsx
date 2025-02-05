@@ -12,7 +12,8 @@ export type RootStackParamList = {
     UserSignUp: undefined;
     MerchantSignUp: undefined;
     SignIn: undefined;
-    Onbording: undefined;
+    LoginSignup: undefined;
+    Onboarding: undefined;
     ComplateProfile: undefined;
     Login: undefined;
     Register: undefined;

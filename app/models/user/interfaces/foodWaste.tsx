@@ -21,3 +21,5 @@ interface LeftoverMeal {
     portionWasted: number; // Portion wasted (e.g., 0.5 for half of a serving)
     cost: number; // Cost of the wasted portion (USD)
 }
+
+export default FoodWaste;
