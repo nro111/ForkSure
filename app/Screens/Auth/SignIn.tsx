@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
   ToastAndroid,
+  Modal,
 } from "react-native";
 import { FONTS, COLORS } from "../../constants/theme";
 import { GlobalStyleSheet } from "../../constants/StyleSheet";
@@ -26,28 +27,36 @@ import * as Google from "expo-auth-session/providers/google";
 import { signInWithCredential, GoogleAuthProvider, signInWithEmailAndPassword, } from "firebase/auth";
 import Common from "../../constants/common";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Auth from "../../Service/Auth";
+import { setUser } from "../../redux/reducer/user";
+import { useDispatch } from "react-redux";
+import LoginModal from "../../components/Modal/LoginModal";
+import FirstTimeLoginModal from "../../components/Modal/FirstTimeLoginModal";
 
 type SignInScreenProps = StackScreenProps<RootStackParamList, "SignIn">;
 
 const SignIn = ({ navigation }: SignInScreenProps) => {
   const theme = useTheme();
   const { colors }: { colors: any } = theme;
-  
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(false);
   const [email, setemail] = useState("");
   const [pass, setpass] = useState("");
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     //expoClientId: Constants.manifest.extra.expoClientId,
     androidClientId: "blah",
-    // iosClientId: Constants.manifest.extra.iosClientId,
+    //iosClientId: Constants.manifest.extra.iosClientId,
     webClientId: "blah",
   });
 
   useEffect(() => {
     if (response?.type === "success") {
       const { id_token } = response.params;
-     
+
       // Firebase sign-in with credential
       const credential = GoogleAuthProvider.credential(id_token);
       signInWithCredential(auth, credential)
@@ -74,9 +83,9 @@ const SignIn = ({ navigation }: SignInScreenProps) => {
   const handleLogin = async (type: string) => {
     try {
       if (await email.trim() == "" || await pass.trim() == "") {
-          Platform.OS === "android"
-            ? ToastAndroid.show("Fill in all the fields!", ToastAndroid.LONG)
-            : Alert.alert("Fill in all the fields!");
+        Platform.OS === "android"
+          ? ToastAndroid.show("Fill in all the fields!", ToastAndroid.LONG)
+          : Alert.alert("Fill in all the fields!");
         return false;
       }
       setLoading(true);
@@ -93,10 +102,17 @@ const SignIn = ({ navigation }: SignInScreenProps) => {
             // update push notification token
             //...
 
-            if (type === Common.UserTypes.USER)
-              navigation.replace("DrawerNavigation", { screen: "Dashboard" });
-            else
-              navigation.replace("DrawerNavigation", { screen: "Dashboard" });
+            let userData: any;
+            userData = await Auth.fetchUser(email, type);
+
+            if (userData) {
+              dispatch(setUser(userData));
+
+              if (type === Common.UserTypes.USER)
+                navigation.navigate('DrawerNavigation', { screen: 'Dashboard' });
+              else
+                navigation.navigate('DrawerNavigation', { screen: 'Dashboard' });
+            }
           }
         })
         .catch((error) => {
@@ -280,7 +296,7 @@ const SignIn = ({ navigation }: SignInScreenProps) => {
                     onPress={() => promptAsync()}
                     icon={
                       <Image
-                        style={{ height: 20, width: 20, resizeMode: "contain"}}
+                        style={{ height: 20, width: 20, resizeMode: "contain" }}
                         source={IMAGES.google2}
                       />
                     }
@@ -332,12 +348,37 @@ const SignIn = ({ navigation }: SignInScreenProps) => {
                       Create an account
                     </Text>
                   </TouchableOpacity>
+                  <TouchableOpacity onPress={() => setModalVisible(true)} >
+                  <Text
+                      style={{
+                        ...FONTS.fontMedium,
+                        fontSize: 14,
+                        color: COLORS.primary,
+                      }}
+                    >
+                      {" "}
+                      modal
+                    </Text>
+                  </TouchableOpacity>
+                    
                 </View>
               </View>
             </View>
           </SafeAreaView>
         </View>
       </SafeAreaView>
+
+      <Modal
+        animationType="slide" // or 'fade' or 'none'
+        transparent={false} // Set to true for a transparent background
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)} // Android back button behavior
+      >
+        <View>
+          <FirstTimeLoginModal />
+          {/* <Button title="Close Modal" onPress={() => setModalVisible(false)} /> */}
+        </View>
+      </Modal>
     </ScrollView>
   );
 };

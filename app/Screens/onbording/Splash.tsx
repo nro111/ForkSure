@@ -45,7 +45,7 @@ const Splash = ({navigation}: SplashScreenProps) => {
                 navigation.navigate('DrawerNavigation',{screen : 'Home'})
             }
         }else{
-            navigation.navigate('Onbording')
+            navigation.navigate('Onboarding')
         }
     }
     return(
