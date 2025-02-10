@@ -5,7 +5,7 @@ import BottomTab from '../layout/BottomTab';
 import Profile from '../Screens/profile/Profile';
 import { BottomTabParamList } from './BottomTabParamList';
 import SaveJob from '../Screens/SaveJob/SaveJob';
-import Onboarding from '../Screens/onbording/Onbording';
+import Onboarding from '../Screens/onbording/OnbordingOld';
 // import CameraComponent from '../components/Camera/ReceiptCamera';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
