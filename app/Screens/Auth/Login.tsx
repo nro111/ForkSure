@@ -15,9 +15,9 @@ import { useTheme } from "@react-navigation/native";
 import { setUser } from '../../redux/reducer/user';
 import { useDispatch } from "react-redux";
 
-type LoginSignupProps = StackScreenProps<RootStackParamList, "LoginSignup">;
+type LoginProps = StackScreenProps<RootStackParamList, "Login">;
 
-const LoginSignup = ({ navigation }: LoginSignupProps) => {
+const Login = ({ navigation }: LoginProps) => {
   const theme = useTheme();
   const { colors }: { colors: any } = theme;
   const onGoogleSignup = () => { };
@@ -202,8 +202,9 @@ const LoginSignup = ({ navigation }: LoginSignupProps) => {
       </View>
 
       {/* Login Link */}
-      <TouchableOpacity onPress={onLogin}>
-        <Text style={styles.loginText}>Already have account? Log In</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("HeightWeightAgeScreen")}>
+        <Text
+          style={styles.loginText}>Already have account? Log In</Text>
       </TouchableOpacity>
 
       {/* Home Indicator */}
@@ -316,5 +317,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginSignup;
+export default Login;
 

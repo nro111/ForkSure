@@ -76,7 +76,8 @@ import Tabs from "../Screens/Shortcode/Tabs";
 import Tables from "../Screens/Shortcode/Tables";
 import Toggles from "../Screens/Shortcode/Toggles";
 import { SafeAreaView } from "react-native";
-import LoginSignup from "../Screens/Auth/LoginSignup";
+import Login from "../Screens/Auth/Login";
+import CreateProfileScreen from "../Screens/Auth/CreateProfileScreen";
 //import WebViewer from "../components/WebView/ReceiptViewer";
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -87,13 +88,14 @@ const StackNavigator = () => {
     <SafeAreaView style={{width:'100%', flex: 1 }}>
       <Stack.Navigator
         //initialRouteName={"splash"}
-        initialRouteName={"LoginSignup"}
+        initialRouteName={"Onboarding"}
         screenOptions={{
           headerShown: false,
           cardStyle: { backgroundColor: "transparent",flex:1 },
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       >
+        <Stack.Screen name={"CreateProfileScreen"} component={CreateProfileScreen} />
         <Stack.Screen name={"AllHouseholdMealPlans"} component={AllHouseholdMealPlans} />
         <Stack.Screen name={"MyMealPlan"} component={MyMealPlan} />
         <Stack.Screen name={"splash"} component={Splash} />
@@ -102,7 +104,7 @@ const StackNavigator = () => {
         <Stack.Screen name={"ComplateProfile"} component={ComplateProfile} />
         <Stack.Screen name={"SignIn"} component={SignIn} />
         <Stack.Screen name={"UserSignUp"} component={UserSignUp} />
-        <Stack.Screen name={"LoginSignup"} component={LoginSignup} />
+        <Stack.Screen name={"Login"} component={Login} />
         <Stack.Screen name={"ForgatPassword"} component={ForgatPassword} />
         <Stack.Screen name={"EnterCode"} component={EnterCode} />
         <Stack.Screen name={"NewPassword"} component={NewPassword} />
