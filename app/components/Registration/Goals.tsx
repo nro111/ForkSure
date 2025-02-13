@@ -1,10 +1,10 @@
 import React from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 
 const GoalsComponent = () => {
     return (
         <View>
-            
+            <Text>Goals</Text>
         </View>
     );
 }
