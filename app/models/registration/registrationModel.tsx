@@ -1,18 +1,18 @@
 interface RegistrationModel {
-    first_name: String;
-    last_name: String;
-    date_of_birth: Date;
-    preferred_ingredients: String[]; // Ingredients
-    disliked_ingredients: String[]; // Ingredients
-    preferred_cuisines: String[]; // Cuisines (e.g., "Mexican")
-    disliked_cuisines: String[]; // Cuisines (e.g., "Mexican")
-    dietary_preferences: String[]; // Dietary restrictions/preferences
-    allergies: String[]; // Allergens
-    goals: String[];
-    email: String;
-    password: String;
-    height: String;
-    weight: Number;
+    first_name: string;
+    last_name: string;
+    date_of_birth: string;
+    preferred_ingredients: string[]; // Ingredients
+    disliked_ingredients: string[]; // Ingredients
+    preferred_cuisines: string[]; // Cuisines (e.g., "Mexican")
+    disliked_cuisines: string[]; // Cuisines (e.g., "Mexican")
+    dietary_preferences: string[]; // Dietary restrictions/preferences
+    allergies: string[]; // Allergens
+    goals: string[];
+    email: string;
+    password: string;
+    height: string;
+    weight: string;
 }
 
 export default RegistrationModel;
