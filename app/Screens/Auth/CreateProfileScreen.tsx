@@ -35,11 +35,17 @@ const CreateProfileScreen = ({ navigation }: CreateProfileScreenProps) => {
         password: '',
         height: '',
         weight: '',
+        gender: '',
     });
 
     const toggleCurrentStep = (currentStep) => {
         setCurrentCreateProfileStep(currentStep);
     }
+
+    // Function to update form data
+    const handleFormChange = (field: string, value: string) => {
+        setProfileRegistrationData((prev) => ({ ...prev, [field]: value }));
+    };
 
     const createProfile = async () => {
         try {
@@ -134,11 +140,29 @@ const CreateProfileScreen = ({ navigation }: CreateProfileScreenProps) => {
                     <ActivityIndicator size={"large"} color={COLORS.white} />
                 </View>
             ) : null}
-            {currentCreateProfileStep === 0 && <BasicInfoComponent />}
-            {currentCreateProfileStep === 1 && <GoalsComponent />}
-            {currentCreateProfileStep === 2 && <FavoritesComponent />}
-            {currentCreateProfileStep === 3 && <DislikesComponent />}
-            {currentCreateProfileStep === 4 && <CredentialsComponent />}
+            {currentCreateProfileStep === 0 &&
+                <BasicInfoComponent
+                    onChange={handleFormChange}
+                    registrationModel={profileRegistrationData} />
+            }
+            {currentCreateProfileStep === 1 &&
+                <GoalsComponent
+                    onChange={handleFormChange}
+                    registrationModel={profileRegistrationData} />
+            }
+            {currentCreateProfileStep === 2 &&
+                <FavoritesComponent
+                    onChange={handleFormChange}
+                    registrationModel={profileRegistrationData} />
+            }
+            {currentCreateProfileStep === 3 &&
+                <DislikesComponent
+                    onChange={handleFormChange}
+                    registrationModel={profileRegistrationData} />}
+            {currentCreateProfileStep === 4 &&
+                <CredentialsComponent
+                    onChange={handleFormChange}
+                    registrationModel={profileRegistrationData} />}
             {currentCreateProfileStep < 4 &&
                 <TouchableOpacity
                     style={styles.nextButton}
@@ -165,8 +189,7 @@ const CreateProfileScreen = ({ navigation }: CreateProfileScreenProps) => {
             }
         </View>
     )
-}
-    ;
+};
 const styles = StyleSheet.create({
     container: {
         width: '100%',

@@ -13,6 +13,7 @@ interface RegistrationModel {
     password: string;
     height: string;
     weight: string;
+    gender: string;
 }
 
 export default RegistrationModel;
