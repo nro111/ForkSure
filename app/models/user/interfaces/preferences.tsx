@@ -1,8 +1,10 @@
 interface Preferences {
     favorite_recipes: string[]; // Recipe IDs
     disliked_recipes: string[]; // Recipe IDs
+    preferred_ingredients: string[]; // Ingredients
     disliked_ingredients: string[]; // Ingredients
     preferred_cuisines: string[]; // Cuisines (e.g., "Mexican")
+    disliked_cuisines: string[]; // Cuisines (e.g., "Mexican")
     flavor_profile: FlavorProfile;
     dietary_preferences: string[]; // Dietary restrictions/preferences
     allergies: string[]; // Allergens

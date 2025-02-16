@@ -7,11 +7,13 @@ import GoalsComponent from "../../components/Registration/Goals";
 import CredentialsComponent from "../../components/Registration/Credentials";
 import FavoritesComponent from "../../components/Registration/Favorites";
 import DislikesComponent from "../../components/Registration/Dislikes";
+import RegistrationModel from "../../models/registration/registrationModel"
 
 type CreateProfileScreenProps = StackScreenProps<RootStackParamList, 'CreateProfileScreen'>;
 
 const CreateProfileScreen = ({ navigation }: CreateProfileScreenProps) => {
     const [currentCreateProfileStep, setCurrentCreateProfileStep] = useState(0);
+    const [profileRegistrationData, setProfileRegistrationData] = useState(null);    
 
     const toggleCurrentStep = (currentStep) => {
         setCurrentCreateProfileStep(currentStep);
