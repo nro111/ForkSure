@@ -1,20 +1,19 @@
-interface Preferences {
-    favorite_recipes: string[]; // Recipe IDs
-    disliked_recipes: string[]; // Recipe IDs
+interface RegistrationModel {
+    first_name: string;
+    last_name: string;
+    date_of_birth: string;
     preferred_ingredients: string[]; // Ingredients
     disliked_ingredients: string[]; // Ingredients
     preferred_cuisines: string[]; // Cuisines (e.g., "Mexican")
     disliked_cuisines: string[]; // Cuisines (e.g., "Mexican")
-    flavor_profile: FlavorProfile;
     dietary_preferences: string[]; // Dietary restrictions/preferences
     allergies: string[]; // Allergens
+    goals: string[];
+    email: string;
+    password: string;
+    height: string;
+    weight: string;
+    gender: string;
 }
 
-interface FlavorProfile {
-    spicy: number; // 1-5 scale
-    savory: number; // 1-5 scale
-    sweet: number; // 1-5 scale
-    sour: number; // 1-5 scale
-}
-
-export default Preferences;
+export default RegistrationModel;

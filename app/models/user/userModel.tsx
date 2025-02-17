@@ -2,32 +2,8 @@ import Preferences from '../user/interfaces/preferences';
 import MealPlans from '../user/interfaces/mealPlans';
 import Progress from '../user/interfaces/progress';
 import FoodWaste from '../user/interfaces/foodWaste';
-
-interface Subscription {
-    id: number; // Unique subscription ID
-    features: string[]; // List of feature flags
-    monthlyCost?: number; // Monthly cost in USD
-    yearlyCost?: number; // Yearly cost in USD
-}
-interface BodyDimensions {
-    height: string;
-    weight: string;
-    neckSize: string;
-    hipSize: string;
-    waistSize: string;
-    wristSize: string;
-    bicepSize: string;
-    chestSize: string;
-    thighSize: string;
-    calfSize: string;
-}
-
-interface TasteProfile {
-    topCuisines: string[];
-    flavorRanking: string[];
-    favoriteFoods: string[];
-    favoriteIngredients: string[];   
-}
+import BodyDimensions from './interfaces/bodyDimensions';
+import Subscription from './interfaces/subscription';
 
 interface FirebaseUser {
     createDateTime: string;
