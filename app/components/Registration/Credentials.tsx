@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
+import { ActivityIndicator, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, FONTS } from "../../constants/theme";
 import RegistrationModel from "../../models/registration/registrationModel";
 import CustomInput from "../Input/CustomInput";
@@ -7,11 +7,15 @@ import CustomInput from "../Input/CustomInput";
 interface CredentialsProps {
     onChange: (field: string, value: string) => void;
     registrationModel: RegistrationModel;
+    onStepChange: any;
+    createProfile: any;
 }
 
 const CredentialsComponent = ({
     onChange,
-    registrationModel
+    registrationModel,
+    onStepChange,
+    createProfile,
 }: CredentialsProps) => {
     const [loading, setLoading] = useState(false);
 
@@ -64,6 +68,21 @@ const CredentialsComponent = ({
                     value={registrationModel.password}
                 />
             </View>
+
+            <TouchableOpacity
+                style={styles.nextButton}
+                onPress={() => onStepChange(3)}
+            >
+                <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.nextButton}
+                onPress={() => createProfile(registrationModel)}
+            >
+                <Text style={styles.buttonText}>Finish</Text>
+            </TouchableOpacity>
+
         </View>
     );
 }

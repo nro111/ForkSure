@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
+import { ActivityIndicator, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, FONTS } from "../../constants/theme";
 import RegistrationModel from "../../models/registration/registrationModel";
 import CustomInput from "../Input/CustomInput";
@@ -7,11 +7,13 @@ import CustomInput from "../Input/CustomInput";
 interface DislikesProps {
     onChange: (field: string, value: string) => void;
     registrationModel: RegistrationModel;
+    onStepChange: any;
 }
 
 const DislikesComponent = ({
     onChange,
-    registrationModel
+    registrationModel,
+    onStepChange,
 }: DislikesProps) => {
     const [loading, setLoading] = useState(false);
 
@@ -64,6 +66,20 @@ const DislikesComponent = ({
                     value={registrationModel.disliked_ingredients}
                 />
             </View>
+
+            <TouchableOpacity
+                style={styles.nextButton}
+                onPress={() => onStepChange(2)}
+            >
+                <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.nextButton}
+                onPress={() => onStepChange(4)}
+            >
+                <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
         </View>
     );
 }

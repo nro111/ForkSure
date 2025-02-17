@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
+import { ActivityIndicator, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, FONTS } from "../../constants/theme";
 import RegistrationModel from "../../models/registration/registrationModel";
 import CustomInput from "../Input/CustomInput";
@@ -7,11 +7,13 @@ import CustomInput from "../Input/CustomInput";
 interface GoalsProps {
     onChange: (field: string, value: string) => void;
     registrationModel: RegistrationModel;
+    onStepChange: any;
 }
 
 const GoalsComponent = ({
     onChange,
-    registrationModel
+    registrationModel,
+    onStepChange,
 }: GoalsProps) => {
     const [loading, setLoading] = useState(false);
 
@@ -41,13 +43,27 @@ const GoalsComponent = ({
                         marginBottom: 5,
                     }}
                 >
-                    goals<Text style={{ color: "#FF0000" }}>*</Text>
+                    Goals<Text style={{ color: "#FF0000" }}>*</Text>
                 </Text>
                 <CustomInput
                     onChangeText={(text) => onChange("goals", text)}
                     value={registrationModel.goals}
                 />
             </View>
+
+            <TouchableOpacity
+                style={styles.nextButton}
+                onPress={() => onStepChange(0)}
+            >
+                <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.nextButton}
+                onPress={() => onStepChange(2)}
+            >
+                <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
         </View>
     );
 }
