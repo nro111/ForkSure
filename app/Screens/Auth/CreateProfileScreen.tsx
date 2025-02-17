@@ -143,49 +143,34 @@ const CreateProfileScreen = ({ navigation }: CreateProfileScreenProps) => {
             {currentCreateProfileStep === 0 &&
                 <BasicInfoComponent
                     onChange={handleFormChange}
-                    registrationModel={profileRegistrationData} />
+                    registrationModel={profileRegistrationData}
+                    onStepChange={toggleCurrentStep}
+                />
             }
             {currentCreateProfileStep === 1 &&
                 <GoalsComponent
                     onChange={handleFormChange}
-                    registrationModel={profileRegistrationData} />
+                    registrationModel={profileRegistrationData}
+                    onStepChange={toggleCurrentStep} />
             }
             {currentCreateProfileStep === 2 &&
                 <FavoritesComponent
                     onChange={handleFormChange}
-                    registrationModel={profileRegistrationData} />
+                    registrationModel={profileRegistrationData}
+                    onStepChange={toggleCurrentStep} />
             }
             {currentCreateProfileStep === 3 &&
                 <DislikesComponent
                     onChange={handleFormChange}
-                    registrationModel={profileRegistrationData} />}
+                    registrationModel={profileRegistrationData}
+                    onStepChange={toggleCurrentStep} />
+            }
             {currentCreateProfileStep === 4 &&
                 <CredentialsComponent
                     onChange={handleFormChange}
-                    registrationModel={profileRegistrationData} />}
-            {currentCreateProfileStep < 4 &&
-                <TouchableOpacity
-                    style={styles.nextButton}
-                    onPress={() => toggleCurrentStep(currentCreateProfileStep + 1)}
-                >
-                    <Text style={styles.buttonText}>Next</Text>
-                </TouchableOpacity>
-            }
-            {currentCreateProfileStep === 4 &&
-                <TouchableOpacity
-                    style={styles.nextButton}
-                    onPress={() => createProfile()}
-                >
-                    <Text style={styles.buttonText}>Finish</Text>
-                </TouchableOpacity>
-            }
-            {currentCreateProfileStep > 0 &&
-                <TouchableOpacity
-                    style={styles.nextButton}
-                    onPress={() => toggleCurrentStep(currentCreateProfileStep - 1)}
-                >
-                    <Text style={styles.buttonText}>Back</Text>
-                </TouchableOpacity>
+                    registrationModel={profileRegistrationData}
+                    onStepChange={toggleCurrentStep} 
+                    createProfile={createProfile}/>
             }
         </View>
     )

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
+import { ActivityIndicator, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, FONTS } from "../../constants/theme";
 import RegistrationModel from "../../models/registration/registrationModel";
 import CustomInput from "../Input/CustomInput";
@@ -7,11 +7,13 @@ import CustomInput from "../Input/CustomInput";
 interface FavoritesProps {
     onChange: (field: string, value: string) => void;
     registrationModel: RegistrationModel;
+    onStepChange: any;
 }
 
 const FavoritesComponent = ({
     onChange,
-    registrationModel
+    registrationModel,
+    onStepChange,
 }: FavoritesProps) => {
     const [loading, setLoading] = useState(false);
 
@@ -80,6 +82,20 @@ const FavoritesComponent = ({
                     value={registrationModel.preferred_ingredients}
                 />
             </View>
+
+            <TouchableOpacity
+                style={styles.nextButton}
+                onPress={() => onStepChange(1)}
+            >
+                <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.nextButton}
+                onPress={() => onStepChange(3)}
+            >
+                <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
         </View>
     );
 }
