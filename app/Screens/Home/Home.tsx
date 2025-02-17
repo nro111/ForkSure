@@ -1,248 +1,164 @@
-import React, { useState, useEffect } from "react";
-import { useTheme } from "@react-navigation/native";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-  StyleSheet,
-  Modal
-} from "react-native";
-import { GlobalStyleSheet } from "../../constants/StyleSheet";
-import { COLORS, FONTS } from "../../constants/theme";
-import { IMAGES } from "../../constants/Images";
-import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { RootStackParamList } from "../../Navigations/RootStackParamList";
-import { Feather } from "@expo/vector-icons";
-import ReceiptCard from "../../components/Card/ReceiptCard";
-import FirebaseServices from "../../Service/FirebaseServices";
-import Utils from "../../utilities/utils";
-import LocationTracker from "../../components/Location/LocationTracker";
-import Collapsible from "react-native-collapsible";
-import FirstTimeLoginModal from "../../components/Modal/FirstTimeLoginModal";
-import FirebaseUser from "../../models/user/userModel";
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { RootStackParamList } from '../../Navigations/RootStackParamList';
+import { PieChart, BarChart } from "react-native-svg-charts";
+import { Card, ProgressBar, Title } from 'react-native-paper';
 
 type HomeScreenProps = { navigation: DrawerNavigationProp<RootStackParamList, "Dashboard"> };
 
 const Home = ({ navigation }: HomeScreenProps) => {
-  const theme = useTheme();
-  const { colors }: { colors: any } = theme;
-  const [receiptData, setReceiptData] = useState<any[]>([]);
-  const [activeSections, setActiveSections] = useState<string[]>([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [user, setUser] = useState<FirebaseUser | undefined>(undefined);
-
-  // const locale = useLocales ? useLocales() : 'en'; // Default to 'en' if undefined
-  // console.log('Current Locale:', locale);
-  useEffect(() => {
-    // Subscribe to user receipts
-    const unsubscribe = FirebaseServices.subscribeToUserReceipts((data) => {
-      console.log("Updated receipts:", data);
-      setReceiptData(data);
+    const [nutritionData, setNutritionData] = useState({
+        calories: 2200,
+        protein: 150,
+        carbs: 250,
+        fats: 80,
     });
 
-    // Cleanup on unmount
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+    const data = [
+        { key: 1, amount: 40, svg: { fill: "#600080" } },
+        { key: 2, amount: 30, svg: { fill: "#9900cc" } },
+        { key: 3, amount: 20, svg: { fill: "#c61aff" } },
+        { key: 4, amount: 10, svg: { fill: "#d966ff" } },
+    ];
 
-  const toggleSection = (merchantName: string) => {
-    setActiveSections((prev) =>
-      prev.includes(merchantName)
-        ? prev.filter((name) => name !== merchantName)
-        : [...prev, merchantName]
+    const [waterIntake, setWaterIntake] = useState(2.5); // In liters
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            loadData(); // Refresh when screen is focused
+        }, [])
     );
-  };
 
-  return (
-    <SafeAreaView
-      style={{ backgroundColor: colors.card, flex: 1, marginBottom: 0 }}
-    >
-      <View style={[GlobalStyleSheet.container, { padding: 0 }]}>
-        <View
-          style={{
-            height: 60,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            zIndex: 11,
-            backgroundColor: theme.dark ? colors.background : "#FAFCFF",
-            paddingHorizontal: 10,
-          }}
-        >
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <Image
-              style={{
-                height: 16,
-                width: 22,
-              }}
-              source={IMAGES.menu}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Search")}
-            activeOpacity={0.5}
-            style={{ flex: 1, marginHorizontal: 15 }}
-          >
-            <TextInput
-              style={{
-                ...FONTS.fontMedium,
-                height: 40,
-                borderRadius: 40,
-                width: "100%",
-                backgroundColor: colors.card,
-                borderWidth: 1,
-                borderColor: colors.border,
-                color: colors.title,
-                fontSize: 14,
-                paddingHorizontal: 45,
-              }}
-              placeholder="Search Receipt..."
-              placeholderTextColor={"#5F729D"}
-              editable={false}
-            />
-            <View style={{ position: "absolute", left: 15, top: 10 }}>
-              <Feather color={COLORS.primary} size={18} name="search" />
+    const loadData = async () => {
+        try {
+            const savedData = await AsyncStorage.getItem('nutritionData');
+            if (savedData) {
+                setNutritionData(JSON.parse(savedData));
+            }
+
+            const savedWater = await AsyncStorage.getItem('waterIntake');
+            if (savedWater) {
+                setWaterIntake(parseFloat(savedWater));
+            }
+        } catch (error) {
+            console.log('Error loading data:', error);
+        }
+    };
+
+    const totalCalories = 2200;
+    const dailyGoal = 2500;
+    const nutrientData1 = [
+        { value: 120, svg: { fill: "#4CAF50" }, key: "Protein" }, // Green
+        { value: 200, svg: { fill: "#FF9800" }, key: "Carbs" }, // Orange
+        { value: 80, svg: { fill: "#F44336" }, key: "Fats" }, // Red
+    ];
+    const weeklyCalories = [1800, 2100, 2300, 1950, 2200, 2500, 2400];
+
+    return (
+        <ScrollView style={styles.container}>
+            {/* Summary Cards */}
+            <View style={styles.row}>
+                <Card style={styles.card}>
+                    <Card.Content>
+                        <Title>Total Calories</Title>
+                        <Text>{totalCalories} kcal</Text>
+                    </Card.Content>
+                </Card>
+                <Card style={styles.card}>
+                    <Card.Content>
+                        <Title>Goal</Title>
+                        <Text>{dailyGoal} kcal</Text>
+                    </Card.Content>
+                </Card>
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Allownotification")}
-            style={{ padding: 5 }}
-          >
-            <Image
-              style={[GlobalStyleSheet.image3, { tintColor: colors.title }]}
-              source={IMAGES.bell}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
 
-      {/* Add Location Tracker */}
-      {/* <LocationTracker /> */}
-
-      {/* <View
-        style={[
-          GlobalStyleSheet.container,
-          { padding: 0, paddingHorizontal: 15 },
-        ]}
-      >
-        <Text
-          style={{ ...FONTS.fontSemiBold, fontSize: 16, color: colors.title, paddingBottom: 10 }}
-        >
-          Your Saved Receipts
-        </Text>
-      </View> */}
-
-      {/* <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={GlobalStyleSheet.container}>
-          {receiptData.length === 0 ? (
-            // Default background message when data is empty
-            <View style={styles.emptyContainer}>
-              <Image source={IMAGES.banneruser} style={styles.emptyImage} resizeMode="contain" />
-              <Text style={styles.emptyMessage}>No receipts found</Text>
-            </View>
-          ) : (
-            <View>
-              {Object.entries(receiptData).map(([merchantName, transactions]: [string, any[]], index) => (
-                <View key={index} style={{ marginBottom: 20 }}>
-                  <TouchableOpacity
-                    onPress={() => toggleSection(merchantName)}
-                    style={styles.merchantHeaderContainer}
-                  >
-                    <Text style={styles.merchantHeader}>{merchantName}</Text>
-                    <Feather
-                      name={
-                        activeSections.includes(merchantName)
-                          ? "chevron-up"
-                          : "chevron-down"
-                      }
-                      size={24}
-                      color={colors.text}
+            {/* Pie Chart for Nutrient Breakdown */}
+            <Card style={styles.chartCard}>
+                <Card.Content>
+                    <Title>Nutrient Breakdown</Title>
+                    <PieChart
+                        style={styles.chart}
+                        data={nutrientData1}
+                        innerRadius="50%"
+                        outerRadius="100%"
+                        labelRadius="50%"
+                        padAngle={0.05}
                     />
-                  </TouchableOpacity>
+                    <View style={styles.legend}>
+                        {nutrientData1.map((item) => (
+                            <View key={item.key} style={styles.legendItem}>
+                                <View style={[styles.colorBox, { backgroundColor: item.svg.fill }]} />
+                                <Text>{item.key}</Text>
+                            </View>
+                        ))}
+                    </View>
+                </Card.Content>
+            </Card>
 
-                  <Collapsible collapsed={!activeSections.includes(merchantName)}>
-                    {transactions.map((data, idx) => (
-                      <View key={idx} style={{ marginBottom: 15 }}>
-                        <ReceiptCard
-                          merchantName={data.merchantName}
-                          merchantAddress={data.merchantAddress}
-                          transactionDate={Utils.formatFromISODate(
-                            data.transactionDate,
-                            "MM/dd/yyyy"
-                          )}
-                          transactionTotal={data.total}
-                          onPress={() =>
-                            navigation.navigate("WebViewer", {
-                              url: data.receiptUri,
-                            })
-                          }
-                        />
-                      </View>
-                    ))}
-                  </Collapsible>
-                </View>
-              ))}
-            </View>
-          )}
-        </View>
-      </ScrollView> */}
+            {/* Bar Chart for Weekly Calories */}
+            <Card style={styles.chartCard}>
+                <Card.Content>
+                    <Title>Calories Over the Week</Title>
+                    <BarChart style={styles.chart} data={weeklyCalories} svg={{ fill: "#4CAF50" }} contentInset={{ top: 20, bottom: 20 }} />
+                </Card.Content>
+            </Card>
 
-      <Modal
-        animationType="slide" // or 'fade' or 'none'
-        transparent={false} // Set to true for a transparent background
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)} // Android back button behavior
-      >
-        <View>
-          <FirstTimeLoginModal />
-          {/* <Button title="Close Modal" onPress={() => setModalVisible(false)} /> */}
-        </View>
-      </Modal>
-    </SafeAreaView>
-  );
+            {/* Daily Progress */}
+            <Card style={styles.chartCard}>
+                <Card.Content>
+                    <Title>Today's Progress</Title>
+                    <ProgressBar progress={totalCalories / dailyGoal} color="#4CAF50" />
+                </Card.Content>
+            </Card>
+        </ScrollView>
+    );
 };
 
+
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1
-  },
-  emptyContainer: {
-    flex: 1,
-    paddingTop: 180,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  emptyImage: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
-  },
-  emptyMessage: {
-    fontSize: 18,
-    color: "#666",
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-  merchantHeaderContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    backgroundColor: COLORS.lightGray,
-    borderRadius: 8,
-    marginBottom: 5,
-  },
-  merchantHeader: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-  },
+    container: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: "#f5f5f5",
+    },
+    row: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    card: {
+        flex: 1,
+        margin: 5,
+        padding: 10,
+    },
+    chartCard: {
+        marginVertical: 10,
+        padding: 10,
+    },
+    chart: {
+        height: 200,
+    },
+    legend: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 10,
+    },
+    legendItem: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginHorizontal: 10,
+    },
+    colorBox: {
+        width: 12,
+        height: 12,
+        marginRight: 5,
+    },
 });
 
 export default Home;

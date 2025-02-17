@@ -5,7 +5,6 @@ import BottomTab from '../layout/BottomTab';
 import Profile from '../Screens/profile/Profile';
 import { BottomTabParamList } from './BottomTabParamList';
 import SaveJob from '../Screens/SaveJob/SaveJob';
-import Onboarding from '../Screens/onbording/OnbordingOld';
 // import CameraComponent from '../components/Camera/ReceiptCamera';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -24,10 +23,7 @@ const BottomNavigation = () => {
                 name="Dashboard" 
                 component={HomeScreen} 
             />
-            <Tab.Screen 
-                name="Onboarding" 
-                component={Onboarding} 
-            />
+
             <Tab.Screen 
                 name="Profile" 
                 component={Profile} 

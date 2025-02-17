@@ -202,7 +202,7 @@ const Login = ({ navigation }: LoginProps) => {
       </View>
 
       {/* Login Link */}
-      <TouchableOpacity onPress={() => navigation.navigate("HeightWeightAgeScreen")}>
+      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
         <Text
           style={styles.loginText}>Already have account? Log In</Text>
       </TouchableOpacity>
