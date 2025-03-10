@@ -78,6 +78,7 @@ import Toggles from "../Screens/Shortcode/Toggles";
 import { SafeAreaView } from "react-native";
 import Login from "../Screens/Auth/Login";
 import CreateProfileScreen from "../Screens/Auth/CreateProfileScreen";
+import NutritionInputScreen from "../Screens/NutritionalDiary/NutritionInputScreen";
 //import WebViewer from "../components/WebView/ReceiptViewer";
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -95,6 +96,7 @@ const StackNavigator = () => {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       >
+        <Stack.Screen name={"NutritionInputScreen"} component={NutritionInputScreen} />
         <Stack.Screen name={"CreateProfileScreen"} component={CreateProfileScreen} />
         <Stack.Screen name={"AllHouseholdMealPlans"} component={AllHouseholdMealPlans} />
         <Stack.Screen name={"MyMealPlan"} component={MyMealPlan} />

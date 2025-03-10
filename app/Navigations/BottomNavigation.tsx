@@ -5,6 +5,8 @@ import BottomTab from '../layout/BottomTab';
 import Profile from '../Screens/profile/Profile';
 import { BottomTabParamList } from './BottomTabParamList';
 import SaveJob from '../Screens/SaveJob/SaveJob';
+import EditProfile from '../Screens/profile/EditProfile';
+import NutritionInputScreen from '../Screens/NutritionalDiary/NutritionInputScreen';
 // import CameraComponent from '../components/Camera/ReceiptCamera';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -15,18 +17,23 @@ const BottomNavigation = () => {
         <Tab.Navigator
             initialRouteName='Dashboard'
             screenOptions={{
-                headerShown : false
+                headerShown: false
             }}
-            tabBar={(props:any) => <BottomTab {...props}/>}
+            tabBar={(props: any) => <BottomTab {...props} />}
         >
-            <Tab.Screen 
-                name="Dashboard" 
-                component={HomeScreen} 
+            <Tab.Screen
+                name="Dashboard"
+                component={HomeScreen}
             />
 
-            <Tab.Screen 
-                name="Profile" 
-                component={Profile} 
+            <Tab.Screen
+                name="EditProfile"
+                component={EditProfile}
+            />
+
+            <Tab.Screen
+                name="NutritionInputScreen"
+                component={NutritionInputScreen}
             />
         </Tab.Navigator>
     );
