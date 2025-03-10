@@ -100,7 +100,7 @@ const CustomNavigation = ({ state, navigation, descriptors }: Props) => {
             icon1.value = withSpring(10);
             icon2.value = withSpring(0);
             icon3.value = withSpring(0);
-          } else if (route.name === 'Camera') {
+          } else if (route.name === 'EditProfile') {
             targetOffset = SIZES.width / 3;
             icon1.value = withSpring(0);
             icon2.value = withSpring(10);
