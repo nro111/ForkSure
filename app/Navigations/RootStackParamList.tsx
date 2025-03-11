@@ -1,8 +1,11 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { BottomTabParamList } from "./BottomTabParamList";
+import MealPlan from "../models/mealPlan/MealPlan";
 
 export type RootStackParamList = {
     DrawerNavigation: NavigatorScreenParams<BottomTabParamList>;
+    MealPlanDetailsScreen: { mealPlan: MealPlan };
+    MealPlanDiscoveryScreen: undefined;
     NutritionInputScreen: undefined;
     CreateProfileScreen: undefined;
     AllHouseholdMealPlans: undefined;
