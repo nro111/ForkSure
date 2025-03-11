@@ -4,4 +4,5 @@ export type BottomTabParamList = {
     EditProfile: undefined;
     Profile: undefined;
     NutritionInputScreen: undefined;
+    MealPlanDiscoveryScreen: undefined;
 };

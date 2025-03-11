@@ -7,6 +7,7 @@ import { BottomTabParamList } from './BottomTabParamList';
 import SaveJob from '../Screens/SaveJob/SaveJob';
 import EditProfile from '../Screens/profile/EditProfile';
 import NutritionInputScreen from '../Screens/NutritionalDiary/NutritionInputScreen';
+import MealPlanDiscoveryScreen from '../Screens/MealPlan/MealPlanDiscoveryScreen';
 // import CameraComponent from '../components/Camera/ReceiptCamera';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -34,6 +35,11 @@ const BottomNavigation = () => {
             <Tab.Screen
                 name="NutritionInputScreen"
                 component={NutritionInputScreen}
+            />
+
+            <Tab.Screen
+                name="MealPlanDiscoveryScreen"
+                component={MealPlanDiscoveryScreen}
             />
         </Tab.Navigator>
     );
